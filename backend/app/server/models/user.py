@@ -1,8 +1,8 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
 
-
 class UserSchema(BaseModel):
+    name: str = Field(...)
     email: EmailStr = Field(...)
     password: str = Field(...)
     profile_picture: str = Field(None)
@@ -11,6 +11,7 @@ class UserSchema(BaseModel):
     class Config:
         schema_extra = {
             "example": {
+                "name" : "John Doe",
                 "email": "jdoe@x.edu.ng",
                 "password": "encrypted_password",
                 "profile_picture": "url_of_image",

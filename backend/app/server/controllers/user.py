@@ -1,14 +1,18 @@
 from bson.objectid import ObjectId
 from ..database import users_collection
+from passlib.context import CryptContext
+from fastapi import HTTPException
+from .auth import AuthHandler
 
 # helpers
 
+auth_handler = AuthHandler()
 
 def user_helper(user) -> dict:
     return {
         "user_id": str(user["_id"]),
+        "name" : user["name"],
         "email": user["email"],
-        "password": user["password"],
         "profile_picture": user["profile_picture"],
         "description": user["description"]
     }
@@ -24,6 +28,10 @@ async def retrieve_users():
 
 # Add a new user into to the database
 async def add_user(user_data: dict) -> dict:
+    if await users_collection.find_one({"email":user_data['email']}):
+        raise HTTPException(status_code=404, detail='Account already exists with the email')
+    hashed_password = auth_handler.get_password_hash(user_data["password"])
+    user_data["password"] = hashed_password
     user = await users_collection.insert_one(user_data)
     new_user = await users_collection.find_one({"_id": user.inserted_id})
     return user_helper(new_user)
