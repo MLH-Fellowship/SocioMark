@@ -3,13 +3,16 @@ from fastapi.encoders import jsonable_encoder
 
 from ..controllers.user import (
     add_user,
+    login,
     delete_user,
     retrieve_user,
     update_user,
+    
 )
 from ..models.user import (
     ResponseModel,
     UserSchema,
+    LoginSchema,
     UpdateUserModel,
 )
 
@@ -22,6 +25,11 @@ async def add_user_data(user: UserSchema = Body(...)):
     new_user = await add_user(user)
     return ResponseModel(new_user, "User added successfully.")
 
+@router.post("/login", response_description="User Logged in Successfully", status_code=status.HTTP_201_CREATED)
+async def user_login(user_details: LoginSchema = Body(...)):
+    user_details = jsonable_encoder(user_details)
+    login_response = await login(user_details)
+    return ResponseModel(login_response,"User Logged in Successfully")
 
 @router.delete("/delete", response_description="Delete user from the database")
 async def delete_user_data(user_id: str):

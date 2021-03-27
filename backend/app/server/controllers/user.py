@@ -1,7 +1,7 @@
 from bson.objectid import ObjectId
 from ..database import users_collection
 from passlib.context import CryptContext
-from fastapi import HTTPException
+from fastapi import HTTPException,status
 from .auth import AuthHandler
 
 # helpers
@@ -36,6 +36,13 @@ async def add_user(user_data: dict) -> dict:
     new_user = await users_collection.find_one({"_id": user.inserted_id})
     return user_helper(new_user)
 
+# Login Functionality
+async def login(user_data: dict) -> dict:
+    getUser = await users_collection.find_one({"email":user_data["email"]})
+    if (getUser is None) or (not auth_handler.verify_password(user_data["password"], getUser["password"])):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Credentials')
+    token = auth_handler.create_access_token(str(getUser["email"]))
+    return {"access_token": token}
 
 # Retrieve a user with a matching ID
 async def retrieve_user(id: str) -> dict:

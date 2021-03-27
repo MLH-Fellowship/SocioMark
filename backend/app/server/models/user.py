@@ -19,6 +19,17 @@ class UserSchema(BaseModel):
             }
         }
 
+class LoginSchema(BaseModel):
+    email: EmailStr = Field(...)
+    password: str = Field(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "email" : "jdoe@s.edu.org",
+                "password" : "Jdoe@123"
+            }
+        }
 
 class UpdateUserModel(BaseModel):
     email: Optional[EmailStr]
@@ -41,7 +52,7 @@ class UpdateUserModel(BaseModel):
 def ResponseModel(data, message):
     return {
         "data": [data],
-        "code": 200,
+        "code": 201,
         "message": message,
     }
 
