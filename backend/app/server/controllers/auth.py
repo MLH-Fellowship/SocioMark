@@ -5,11 +5,10 @@ from typing import Optional
 from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer, HTTPAuthorizationCredentials,HTTPBearer
 from fastapi import Depends, FastAPI, HTTPException, status, Security
+from dotenv import dotenv_values,find_dotenv
+
+config=dotenv_values(find_dotenv())
 class AuthHandler():
-    #later move to env file
-    SECRET_KEY = "0d6b0ec26db1be6d211e11257459fde2fcc8256514eca3fb6a67075fa28ad2f3"
-    ALGORITHM = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -24,18 +23,18 @@ class AuthHandler():
     #create jwt access token
     def create_access_token(self, email):
         payload = {
-            'exp' : datetime.utcnow() + timedelta(minutes=self.ACCESS_TOKEN_EXPIRE_MINUTES),
+            'exp' : datetime.utcnow() + timedelta(int(config["ACCESS_TOKEN_EXPIRE_MINUTES"])),
             'sub' : email
         }
         return jwt.encode(
             payload,
-            self.SECRET_KEY,
-            algorithm=self.ALGORITHM
+            config["SECRET_KEY"],
+            algorithm=config["ALGORITHM"]
         )
  
     def decode_token(self, token):
         try:
-            payload = jwt.decode(token, self.SECRET_KEY, algorithms=[self.ALGORITHM])
+            payload = jwt.decode(token, config["SECRET_KEY"], algorithms=[config["ALGORITHM"]])
             return payload["sub"]
         except jwt.ExpiredSignatureError:
             raise HTTPException(status_code=401, detail='Signature has expired')

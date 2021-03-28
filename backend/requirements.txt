@@ -5,3 +5,4 @@ motor==2.2.0
 passlib==1.7.4
 bcrypt==3.2.0
 PyJWT==2.0.1
+python-dotenv==0.15.0
