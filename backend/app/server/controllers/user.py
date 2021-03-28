@@ -50,14 +50,14 @@ async def retrieve_user(id: str) -> dict:
 
 
 # Update a user with a matching ID
-async def update_user(id: str, data: dict):
+async def update_user(email: str, data: dict):
     # Return false if an empty request body is sent.
     if len(data) < 1:
         return False
-    user = await users_collection.find_one({"_id": ObjectId(id)})
+    user = await users_collection.find_one({"email":email})
     if user:
         updated_user = await users_collection.update_one(
-            {"_id": ObjectId(id)}, {"$set": data}
+            {"email": email}, {"$set": data}
         )
         if updated_user:
             return True
@@ -65,8 +65,8 @@ async def update_user(id: str, data: dict):
 
 
 # Delete a user from the database
-async def delete_user(id: str):
-    user = await users_collection.find_one({"_id": ObjectId(id)})
+async def delete_user(email: str):
+    user = await users_collection.find_one({"email": email})
     if user:
-        await users_collection.delete_one({"_id": ObjectId(id)})
+        await users_collection.delete_one({"email": email})
         return True
