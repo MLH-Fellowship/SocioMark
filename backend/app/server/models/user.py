@@ -13,7 +13,7 @@ class UserSchema(BaseModel):
             "example": {
                 "name" : "John Doe",
                 "email": "jdoe@x.edu.ng",
-                "password": "encrypted_password",
+                "password": "password",
                 "profile_picture": "url_of_image",
                 "description": "This is John Doe"
             }
@@ -40,8 +40,9 @@ class UpdateUserModel(BaseModel):
     class Config:
         schema_extra = {
             "example": {
+                "name" : "John Doe",
                 "email": "jdoe@x.edu.ng",
-                "password": "encrypted_password",
+                "password": "password",
                 "profile_picture": "url_of_image",
                 "description": "This is John Doe"
             }

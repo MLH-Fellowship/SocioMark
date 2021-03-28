@@ -44,3 +44,5 @@ class AuthHandler():
     
     def auth_wrapper(self, auth: HTTPAuthorizationCredentials = Security(security)):
         return self.decode_token(auth.credentials)        
+
+auth_handler = AuthHandler()

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Body, Depends
 from fastapi.encoders import jsonable_encoder
-from ..controllers.auth import AuthHandler
+from ..controllers.auth import auth_handler
 
 from ..controllers.post import (
     add_post,
@@ -16,7 +16,6 @@ from ..models.post import (
 )
 
 router = APIRouter()
-auth_handler = AuthHandler()
 
 @router.post("/create", response_description="Post added into the database")
 async def add_post_data(post: PostSchema = Body(...), current_user=Depends(auth_handler.auth_wrapper)):

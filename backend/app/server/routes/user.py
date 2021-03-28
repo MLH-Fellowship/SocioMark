@@ -9,14 +9,13 @@ from ..controllers.user import (
     update_user,    
 )
 
-from ..controllers.auth import AuthHandler
+from ..controllers.auth import auth_handler
 from ..models.user import (
     ResponseModel,
     UserSchema,
     LoginSchema,
     UpdateUserModel,
 )
-auth_handler = AuthHandler()
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 

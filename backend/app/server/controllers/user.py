@@ -2,11 +2,10 @@ from bson.objectid import ObjectId
 from ..database import users_collection
 from passlib.context import CryptContext
 from fastapi import HTTPException,status,Depends
-from .auth import AuthHandler
+from .auth import auth_handler
 
 # helpers
 
-auth_handler = AuthHandler()
 def user_helper(user) -> dict:
     return {
         "user_id": str(user["_id"]),
