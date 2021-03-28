@@ -30,7 +30,6 @@ class LoginSchema(BaseModel):
                 "password" : "Jdoe@123"
             }
         }
-
 class UpdateUserModel(BaseModel):
     email: Optional[EmailStr]
     password: Optional[str]
