@@ -1,30 +1,46 @@
 from bson.objectid import ObjectId
-from ..database import posts_collection
+from fastapi import HTTPException
+from ..database import posts_collection, users_collection
+from .user import add_post_id
 
 # helpers
 
 
-def post_helper(post) -> dict:
+def post_helper(post, user=None) -> dict:
+    if not user:
+        user = users_collection.find_one({"_id": post["user_id"]})
     return {
         "post_id": str(post["_id"]),
-        "user_id": post["user_id"],
+        "author_name": user["name"],
+        "author_email": user["email"],
         "report_counter": post["report_counter"],
         "image": post["image"],
         "description": post["description"]
     }
 
 
+async def initialize_post(user_id: ObjectId, post: dict):
+    post["user_id"] = user_id
+    post["report_counter"] = 0
+    return post
+
+
 # Add a new post into to the database
-async def add_post(post_data: dict) -> dict:
+async def add_post(email: str, post_data: dict) -> dict:
+    user = await users_collection.find_one({"email": email})
+    post_data = await initialize_post(user["_id"], post_data)
     post = await posts_collection.insert_one(post_data)
     new_post = await posts_collection.find_one({"_id": post.inserted_id})
-    return post_helper(new_post)
+    if await add_post_id(user["_id"], new_post["_id"]):
+        return post_helper(new_post, user)
+    else:
+        raise HTTPException(status_code=501, detail='Something went wrong, try again.')
 
 
 # Retrieve all posts with user id present in the database
-async def retrieve_posts(id: str):
+async def retrieve_posts(email: str):
     posts = []
-    async for post in posts_collection.find({"user_id": id}):
+    async for post in posts_collection.find({"email": email}):
         posts.append(post_helper(post))
     return posts
 
