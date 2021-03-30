@@ -14,7 +14,6 @@ app.include_router(PostRouter, tags=["Post"], prefix="/post")
 app.include_router(PostsRouter, tags=["Posts"], prefix="/posts")
 
 
-
 @app.get("/", tags=["Root"])
 async def read_root():
     return {"message": "Welcome to this fantastic app!"}
