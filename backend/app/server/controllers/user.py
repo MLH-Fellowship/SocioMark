@@ -12,7 +12,8 @@ def user_helper(user) -> dict:
         "name": user["name"],
         "email": user["email"],
         "profile_picture": user["profile_picture"],
-        "description": user["description"]
+        "description": user["description"],
+        "posts": user["posts"]
     }
 
 
@@ -72,3 +73,14 @@ async def delete_user(email: str):
     if user:
         await users_collection.delete_one({"email": email})
         return True
+
+
+# Add a post id to the user model
+async def add_post_id(user_id: str, post_id: str):
+    print("author:", user_id, "post:", post_id)
+    user = await users_collection.update_one(
+        {"_id": user_id}, {"$push": {"posts": post_id}}
+    )
+    if user:
+        return True
+    return False
