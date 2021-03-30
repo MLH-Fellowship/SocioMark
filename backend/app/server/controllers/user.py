@@ -77,7 +77,6 @@ async def delete_user(email: str):
 
 # Add a post id to the user model
 async def add_post_id(user_id: str, post_id: str):
-    print("author:", user_id, "post:", post_id)
     user = await users_collection.update_one(
         {"_id": user_id}, {"$push": {"posts": post_id}}
     )
