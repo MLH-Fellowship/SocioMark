@@ -26,7 +26,6 @@ class UpdatePostModel(BaseModel):
     image: Optional[str]
     description: Optional[str]
 
-
     class Config:
         schema_extra = {
             "example": {
