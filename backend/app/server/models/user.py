@@ -31,7 +31,7 @@ class LoginSchema(BaseModel):
             }
         }
 class UpdateUserModel(BaseModel):
-    name: Optional[name]
+    name: Optional[str]
     password: Optional[str]
     profile_picture: Optional[str]
     description: Optional[str]
