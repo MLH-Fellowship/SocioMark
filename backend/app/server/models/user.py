@@ -1,8 +1,8 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
 
-
 class UserSchema(BaseModel):
+    name: str = Field(...)
     email: EmailStr = Field(...)
     password: str = Field(...)
     profile_picture: str = Field(None)
@@ -11,16 +11,27 @@ class UserSchema(BaseModel):
     class Config:
         schema_extra = {
             "example": {
+                "name" : "John Doe",
                 "email": "jdoe@x.edu.ng",
-                "password": "encrypted_password",
+                "password": "password",
                 "profile_picture": "url_of_image",
                 "description": "This is John Doe"
             }
         }
 
+class LoginSchema(BaseModel):
+    email: EmailStr = Field(...)
+    password: str = Field(...)
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "email" : "jdoe@s.edu.org",
+                "password" : "Jdoe@123"
+            }
+        }
 class UpdateUserModel(BaseModel):
-    email: Optional[EmailStr]
+    name: Optional[name]
     password: Optional[str]
     profile_picture: Optional[str]
     description: Optional[str]
@@ -29,8 +40,8 @@ class UpdateUserModel(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "email": "jdoe@x.edu.ng",
-                "password": "encrypted_password",
+                "name" : "John Doe",
+                "password": "password",
                 "profile_picture": "url_of_image",
                 "description": "This is John Doe"
             }
@@ -40,7 +51,7 @@ class UpdateUserModel(BaseModel):
 def ResponseModel(data, message):
     return {
         "data": [data],
-        "code": 200,
+        "code": 201,
         "message": message,
     }
 
