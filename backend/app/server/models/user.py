@@ -31,7 +31,7 @@ class LoginSchema(BaseModel):
             }
         }
 class UpdateUserModel(BaseModel):
-    email: Optional[EmailStr]
+    name: Optional[name]
     password: Optional[str]
     profile_picture: Optional[str]
     description: Optional[str]
@@ -41,7 +41,6 @@ class UpdateUserModel(BaseModel):
         schema_extra = {
             "example": {
                 "name" : "John Doe",
-                "email": "jdoe@x.edu.ng",
                 "password": "password",
                 "profile_picture": "url_of_image",
                 "description": "This is John Doe"
