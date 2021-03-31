@@ -7,13 +7,14 @@ from .auth import auth_handler
 
 
 def user_helper(user) -> dict:
+    posts = [str(x) for x in user["posts"]]
     return {
         "user_id": str(user["_id"]),
         "name": user["name"],
         "email": user["email"],
         "profile_picture": user["profile_picture"],
         "description": user["description"],
-        "posts": user["posts"]
+        "posts": posts
     }
 
 
@@ -76,10 +77,32 @@ async def delete_user(email: str):
 
 
 # Add a post id to the user model
-async def add_post_id(user_id: str, post_id: str):
-    user = await users_collection.update_one(
-        {"_id": user_id}, {"$push": {"posts": post_id}}
+async def add_post_id(user_id: ObjectId, post_id: ObjectId):
+    already_exists = await users_collection.find_one(
+        {"_id": user_id, "posts": post_id}
     )
-    if user:
-        return True
-    return False
+    if already_exists:
+        return False
+    else:
+        user = await users_collection.update_one(
+            {"_id": user_id}, {"$push": {"posts": post_id}}
+        )
+        if user:
+            return True
+        return False
+
+
+# Delete a post id from user model
+async def delete_post_id(user_id: ObjectId, post_id: ObjectId):
+    already_exists = await users_collection.find_one(
+        {"_id": user_id, "posts": post_id}
+    )
+    if already_exists:
+        user = await users_collection.update_one(
+            {"_id": user_id}, {"$pull": {"posts": post_id}}
+        )
+        if user:
+            return True
+        return False
+    else:
+        return False

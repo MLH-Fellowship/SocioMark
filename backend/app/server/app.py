@@ -4,6 +4,7 @@ from .routes.user import router as UserRouter
 from .routes.users import router as UsersRouter
 from .routes.post import router as PostRouter
 from .routes.posts import router as PostsRouter
+from .routes.like import router as LikeRouter
 
 app = FastAPI()
 
@@ -12,6 +13,7 @@ app.include_router(UserRouter, tags=["User"], prefix="/user")
 app.include_router(UsersRouter, tags=["Users"], prefix="/users")
 app.include_router(PostRouter, tags=["Post"], prefix="/post")
 app.include_router(PostsRouter, tags=["Posts"], prefix="/posts")
+app.include_router(LikeRouter, tags=["Like/Unlike"], prefix="/like_unlike")
 
 
 @app.get("/", tags=["Root"])

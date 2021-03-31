@@ -27,14 +27,14 @@ async def add_post_data(post: PostSchema = Body(...), current_user=Depends(auth_
 
 @router.delete("/delete", response_description="Delete post from the database")
 async def delete_post_data(post_id: str, current_user=Depends(auth_handler.auth_wrapper)):
-    new_post = await delete_post(post_id)
+    new_post = await delete_post(current_user, post_id)
     return ResponseModel(new_post, "Post deleted successfully.")
 
 
 @router.patch("/update", response_description="Update post")
 async def update_post_data(post_id: str, updated_post: UpdatePostModel = Body(...), current_user=Depends(auth_handler.auth_wrapper)):
     updated_post = jsonable_encoder(updated_post)
-    new_post = await update_post(post_id, updated_post)
+    new_post = await update_post(current_user, post_id, updated_post)
     return ResponseModel(new_post, "Post updated successfully.")
 
 
