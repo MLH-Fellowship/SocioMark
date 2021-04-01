@@ -1,5 +1,7 @@
+import PublicRouter from "./Router/PublicRouter";
+
 function App() {
-  return <div className="bg-blue-200">SocioMark</div>;
+  return <PublicRouter />;
 }
 
 export default App;
