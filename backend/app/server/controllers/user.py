@@ -74,35 +74,3 @@ async def delete_user(email: str):
     if user:
         await users_collection.delete_one({"email": email})
         return True
-
-
-# Add a post id to the user model
-async def add_post_id(user_id: ObjectId, post_id: ObjectId):
-    already_exists = await users_collection.find_one(
-        {"_id": user_id, "posts": post_id}
-    )
-    if already_exists:
-        return False
-    else:
-        user = await users_collection.update_one(
-            {"_id": user_id}, {"$push": {"posts": post_id}}
-        )
-        if user:
-            return True
-        return False
-
-
-# Delete a post id from user model
-async def delete_post_id(user_id: ObjectId, post_id: ObjectId):
-    already_exists = await users_collection.find_one(
-        {"_id": user_id, "posts": post_id}
-    )
-    if already_exists:
-        user = await users_collection.update_one(
-            {"_id": user_id}, {"$pull": {"posts": post_id}}
-        )
-        if user:
-            return True
-        return False
-    else:
-        return False
