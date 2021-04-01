@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 class PostSchema(BaseModel):
     user_id: str = Field(None)
     report_counter: int = Field(0, ge=0)
+    likes: list = Field([])
     image: str = Field(...)
     description: str = Field(None)
 
