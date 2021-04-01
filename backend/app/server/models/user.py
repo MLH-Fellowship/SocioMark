@@ -8,7 +8,6 @@ class UserSchema(BaseModel):
     password: str = Field(...)
     profile_picture: str = Field(None)
     description: str = Field(None)
-    posts: list = Field([])
 
     class Config:
         schema_extra = {
