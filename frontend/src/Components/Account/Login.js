@@ -50,7 +50,7 @@ export default function Login() {
                 type="email"
                 onChange={handleChange}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="Email"
+                placeholder="Enter your email"
               />
             </div>
             <div className="mb-2">
@@ -67,7 +67,7 @@ export default function Login() {
                 value={form.password}
                 onChange={handleChange}
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                placeholder="******************"
+                placeholder="********"
               />
             </div>
 
