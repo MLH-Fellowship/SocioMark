@@ -2,20 +2,24 @@ from bson.objectid import ObjectId
 from fastapi import HTTPException
 from ..database import posts_collection, users_collection
 from .like import get_all_likes_on_post
+from .comment import get_all_comments_on_post
 
 # helpers
 
 
-def post_helper(post, user, likes=None) -> dict:
+def post_helper(post, user, likes=None, comments=None) -> dict:
     if not likes:
         likes = []
+    if not comments:
+        comments = []
     return {
         "post_id": str(post["_id"]),
         "user_id": str(user["_id"]),
         "author_name": user["name"],
         "author_email": user["email"],
         "report_counter": post["report_counter"],
-        "likes_by_users": likes,
+        "likes": likes,
+        "comments": comments,
         "image": post["image"],
         "description": post["description"]
     }
@@ -42,7 +46,8 @@ async def retrieve_posts(user_id: ObjectId):
     posts_by_user = posts_collection.find({"user_id": ObjectId(user_id)})
     async for post in posts_by_user:
         likes_on_post = await get_all_likes_on_post(post["_id"])
-        posts.append(post_helper(post, user, likes_on_post))
+        comments_on_post = await get_all_comments_on_post(post["_id"])
+        posts.append(post_helper(post, user, likes_on_post, comments_on_post))
     return posts
 
 
@@ -52,7 +57,8 @@ async def retrieve_post(post_id: str) -> dict:
     if post:
         user = await users_collection.find_one({"_id": post["user_id"]})
         likes_on_post = await get_all_likes_on_post(post["_id"])
-        return post_helper(post, user, likes_on_post)
+        comments_on_post = await get_all_comments_on_post(post["_id"])
+        return post_helper(post, user, likes_on_post, comments_on_post)
 
 
 # Update a post with a matching ID

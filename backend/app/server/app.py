@@ -5,6 +5,7 @@ from .routes.users import router as UsersRouter
 from .routes.post import router as PostRouter
 from .routes.posts import router as PostsRouter
 from .routes.like import router as LikeRouter
+from .routes.comment import router as CommentRouter
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -24,6 +25,7 @@ app.include_router(UsersRouter, tags=["Users"], prefix="/users")
 app.include_router(PostRouter, tags=["Post"], prefix="/post")
 app.include_router(PostsRouter, tags=["Posts"], prefix="/posts")
 app.include_router(LikeRouter, tags=["Like/Unlike"], prefix="/like_unlike")
+app.include_router(CommentRouter, tags=["Comment"], prefix="/comment_uncomment")
 
 
 @app.get("/", tags=["Root"])
