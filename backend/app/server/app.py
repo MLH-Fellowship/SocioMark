@@ -5,9 +5,19 @@ from .routes.users import router as UsersRouter
 from .routes.post import router as PostRouter
 from .routes.posts import router as PostsRouter
 from .routes.like import router as LikeRouter
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(UserRouter, tags=["User"], prefix="/user")
 app.include_router(UsersRouter, tags=["Users"], prefix="/users")
