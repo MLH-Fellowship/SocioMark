@@ -54,7 +54,7 @@ class UpdateUserModel(BaseModel):
 
 def ResponseModel(data, message):
     return {
-        "data": [data],
+        "data": data,
         "code": 201,
         "message": message,
     }
