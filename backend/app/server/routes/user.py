@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Body, status, Depends
 from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordBearer
+from fastapi import UploadFile, File, Form
+
 from ..controllers.user import (
     add_user,
     login,
@@ -9,10 +11,10 @@ from ..controllers.user import (
     update_user
 )
 
+from ..controllers.upload import upload_image
 from ..controllers.auth import auth_handler
 from ..models.user import (
     ResponseModel,
-    UserSchema,
     LoginSchema,
     UpdateUserModel,
 )
@@ -21,8 +23,16 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 @router.post("/register", response_description="User data added into the database", status_code=status.HTTP_201_CREATED)
-async def add_user_data(user: UserSchema = Body(...)):
-    user = jsonable_encoder(user)
+async def add_user_data(name: str = Form(...), email: str = Form(...), password: str = Form(...), description: str = Form(None), image: UploadFile = File(...)):
+    # user = jsonable_encoder(user)
+    image_url = upload_image(image)
+    user = {
+        "name": name,
+        "email": email,
+        "password": password,
+        "description": description,
+        "profile_picture": image_url
+    }
     new_user = await add_user(user)
     return ResponseModel(new_user, "User added successfully.")
 
