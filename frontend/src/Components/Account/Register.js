@@ -7,12 +7,13 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    profile_picture: "",
+    profile_picture: null,
     description: "",
   };
   //Confirm Password in BE and FE
   const [form, setForm] = useState(initForm);
   const [formError, setFormError] = useState(false);
+  const [fileInterface, setFile] = useState({ fileUpload: null });
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -20,11 +21,30 @@ export default function Register() {
     FieldValue[name] = value;
     setForm(FieldValue);
   };
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    setFile({
+      fileUpload: file
+    });
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    var bodyFormData = new FormData();
+    bodyFormData.append('name', form.name)
+    bodyFormData.append('email', form.email)
+    bodyFormData.append('password', form.password)
+    bodyFormData.append('description', form.description)
+    bodyFormData.append('image', fileInterface.fileUpload)
+
     axios
-      .post("http://localhost:8000/user/register", { ...form })
-      .then((resp) => {
+      .post("http://localhost:8000/user/register", bodyFormData, {
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      ).then((resp) => {
         console.log("Registered succesfully");
       })
       .catch((err) => {
@@ -50,8 +70,7 @@ export default function Register() {
               <input
                 aria-label="profile_picture"
                 name="profile_picture"
-                value={form.profile_picture}
-                onChange={handleChange}
+                onChange={handleFileUpload}
                 type="file"
                 accept="image/*"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
