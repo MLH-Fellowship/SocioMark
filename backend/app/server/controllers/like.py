@@ -1,5 +1,6 @@
 from bson.objectid import ObjectId
 from ..database import likes_collection, users_collection
+from .user import retrieve_user
 
 # helpers
 
@@ -10,6 +11,14 @@ def like_helper(like) -> dict:
         "user_id": str(like["user_id"]),
         "is_liked": like["is_liked"]
     }
+
+
+async def get_all_likes_on_post(post_id: ObjectId):
+    likes = []
+    async for like in likes_collection.find({"post_id": post_id}, {"user_id", "is_liked"}):
+        if like["is_liked"] is True:
+            likes.append(await retrieve_user(like["user_id"], lightweight=True))
+    return likes
 
 
 async def initialize_like(user_id: ObjectId, post_id: ObjectId, like_details: dict) -> dict:
