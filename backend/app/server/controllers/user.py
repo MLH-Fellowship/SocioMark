@@ -2,20 +2,15 @@ from bson.objectid import ObjectId
 from ..database import users_collection
 from fastapi import HTTPException, status
 from .auth import auth_handler
+from .post import retrieve_posts
 
 # helpers
 
 
-def user_helper(user, lightweight=False) -> dict:
-    if lightweight:
-        return {
-            "user_id": str(user["_id"]),
-            "name": user["name"],
-            "email": user["email"],
-            "profile_picture": user["profile_picture"]
-        }
+def user_helper(user, posts=None) -> dict:
+    if not posts:
+        posts = []
 
-    posts = [str(x) for x in user["posts"]]
     return {
         "user_id": str(user["_id"]),
         "name": user["name"],
@@ -30,7 +25,8 @@ def user_helper(user, lightweight=False) -> dict:
 async def retrieve_users():
     users = []
     async for user in users_collection.find():
-        users.append(user_helper(user))
+        posts_by_user = await retrieve_posts(user["_id"])
+        users.append(user_helper(user, posts=posts_by_user))
     return users
 
 
@@ -55,10 +51,11 @@ async def login(user_data: dict) -> dict:
 
 
 # Retrieve a user with a matching ID
-async def retrieve_user(id: str, lightweight: bool = False) -> dict:
+async def retrieve_user(id: str) -> dict:
     user = await users_collection.find_one({"_id": ObjectId(id)})
     if user:
-        return user_helper(user, lightweight=lightweight)
+        posts_by_user = await retrieve_posts(user["_id"])
+        return user_helper(user, posts=posts_by_user)
 
 
 # Update a user with a matching ID

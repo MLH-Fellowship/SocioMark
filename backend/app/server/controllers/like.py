@@ -1,8 +1,24 @@
 from bson.objectid import ObjectId
 from ..database import likes_collection, users_collection
-from .user import retrieve_user
 
 # helpers
+
+
+# lightweight mode defined here due to circular dependencies
+# besides, only likes API should return lightweight user details
+def user_helper_lightweight(user) -> dict:
+    return {
+        "user_id": str(user["_id"]),
+        "name": user["name"],
+        "email": user["email"],
+        "profile_picture": user["profile_picture"]
+    }
+
+
+async def retrieve_user_lightweight(user_id: ObjectId):
+    user = await users_collection.find_one({"_id": user_id})
+    if user:
+        return user_helper_lightweight(user)
 
 
 def like_helper(like) -> dict:
@@ -17,7 +33,7 @@ async def get_all_likes_on_post(post_id: ObjectId):
     likes = []
     async for like in likes_collection.find({"post_id": post_id}, {"user_id", "is_liked"}):
         if like["is_liked"] is True:
-            likes.append(await retrieve_user(like["user_id"], lightweight=True))
+            likes.append(await retrieve_user_lightweight(like["user_id"]))
     return likes
 
 
