@@ -6,7 +6,15 @@ from .auth import auth_handler
 # helpers
 
 
-def user_helper(user) -> dict:
+def user_helper(user, lightweight=False) -> dict:
+    if lightweight:
+        return {
+            "user_id": str(user["_id"]),
+            "name": user["name"],
+            "email": user["email"],
+            "profile_picture": user["profile_picture"]
+        }
+
     posts = [str(x) for x in user["posts"]]
     return {
         "user_id": str(user["_id"]),
@@ -47,10 +55,10 @@ async def login(user_data: dict) -> dict:
 
 
 # Retrieve a user with a matching ID
-async def retrieve_user(id: str) -> dict:
+async def retrieve_user(id: str, lightweight: bool = False) -> dict:
     user = await users_collection.find_one({"_id": ObjectId(id)})
     if user:
-        return user_helper(user)
+        return user_helper(user, lightweight=lightweight)
 
 
 # Update a user with a matching ID
