@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Body, Depends, status
 from fastapi.encoders import jsonable_encoder
+from fastapi import UploadFile, File, Form
 from ..controllers.auth import auth_handler
 
 from ..controllers.post import (
@@ -9,9 +10,9 @@ from ..controllers.post import (
     update_post,
     report_post
 )
+from ..controllers.upload import upload_image
 from ..models.post import (
     ResponseModel,
-    PostSchema,
     UpdatePostModel,
 )
 
@@ -19,8 +20,13 @@ router = APIRouter()
 
 
 @router.post("/create", response_description="Post added into the database", status_code=status.HTTP_201_CREATED)
-async def add_post_data(post: PostSchema = Body(...), current_user=Depends(auth_handler.auth_wrapper)):
-    post = jsonable_encoder(post)
+async def add_post_data(image: UploadFile = File(...), description: str = Form(None), current_user=Depends(auth_handler.auth_wrapper)):
+    image_url = upload_image(image)
+    post = {
+        "report_counter": 0,
+        "image": image_url,
+        "description": description
+    }
     new_post = await add_post(current_user, post)
     return ResponseModel(new_post, "Post created successfully.")
 
