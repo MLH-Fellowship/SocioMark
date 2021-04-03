@@ -90,7 +90,7 @@ export default function Register() {
       axios
         .post("http://localhost:8000/user/register", bodyFormData, {
           headers: {
-            accept: "application/json",
+            "accept": "application/json",
             "Content-Type": "multipart/form-data",
           },
         })
