@@ -83,7 +83,9 @@ export default function Register() {
       bodyFormData.append("password", form.password);
       bodyFormData.append("confirm_password", form.confirm_password);
       bodyFormData.append("description", form.description);
-      bodyFormData.append("image", fileInterface.fileUpload);
+      if (fileInterface.fileUpload) {
+        bodyFormData.append("image", fileInterface.fileUpload);
+      }
 
       axios
         .post("http://localhost:8000/user/register", bodyFormData, {
