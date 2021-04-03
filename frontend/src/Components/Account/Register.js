@@ -52,7 +52,7 @@ export default function Register() {
       formValid = false;
     } else if (!validatePassword(password)) {
       err["password"] =
-        "Must ontain one uppercase,lowercase, digit and a symbol";
+        "Password must contain at least one uppercase, one lowercase, a digit and a symbol";
       formValid = false;
     }
 
