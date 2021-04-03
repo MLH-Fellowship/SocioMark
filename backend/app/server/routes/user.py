@@ -2,6 +2,7 @@ from fastapi import APIRouter, Body, status, Depends
 from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import UploadFile, File, Form
+from pydantic import EmailStr
 
 from ..controllers.user import (
     add_user,
@@ -23,13 +24,14 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 @router.post("/register", response_description="User data added into the database", status_code=status.HTTP_201_CREATED)
-async def add_user_data(name: str = Form(...), email: str = Form(...), password: str = Form(...), description: str = Form(None), image: UploadFile = File(...)):
-    # user = jsonable_encoder(user)
-    image_url = upload_image(image)
+async def add_user_data(name: str = Form(...), email: EmailStr = Form(...), password: str = Form(...), confirm_password: str = Form(...), description: str = Form(None), image: UploadFile = File(None)):
+    # we can change "" to some default URL containing some generic avatar
+    image_url = upload_image(image) if image else ""
     user = {
         "name": name,
         "email": email,
         "password": password,
+        "confirm_password": confirm_password,
         "description": description,
         "profile_picture": image_url
     }

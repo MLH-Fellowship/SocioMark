@@ -33,7 +33,9 @@ async def retrieve_users():
 # Add a new user into to the database
 async def add_user(user_data: dict) -> dict:
     if await users_collection.find_one({"email": user_data['email']}):
-        raise HTTPException(status_code=404, detail='Account already exists with the email')
+        raise HTTPException(status_code=409, detail='Account already exists with the email')
+    if user_data["password"] != user_data["confirm_password"]:
+        raise HTTPException(status_code=422, detail='Password and Confirm Password do not match')
     hashed_password = auth_handler.get_password_hash(user_data["password"])
     user_data["password"] = hashed_password
     user = await users_collection.insert_one(user_data)
