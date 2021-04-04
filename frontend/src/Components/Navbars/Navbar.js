@@ -100,8 +100,8 @@ export default function Navbar({ links, logout }) {
   return (
     <nav className=" flex items-center justify-around flex-wrap bg-white border-b-1 shadow border-black">
       <div>
-        <div className="flex items-center flex-shrink-0 text-white mr-6 py-6 pl-6">
-          <span className="font-semibold text-black text-4xl ml-1 tracking-tight">
+        <div className="flex items-center flex-shrink-0 text-white sm:mr-6 py-6 sm:pl-6">
+          <span className="font-semibold text-black text-xl sm:text-4xl ml-1 tracking-tight">
             SocioMark
           </span>
         </div>
@@ -111,12 +111,12 @@ export default function Navbar({ links, logout }) {
           aria-label="search"
           name="search"
           type="text"
-          className="appearance-none border text-center rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none border text-center rounded sm:py-2 sm:px-3 py-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           placeholder="Search Users"
         />
       </div>
 
-      <div className="block lg:hidden py-6 pr-6">
+      <div className="block lg:hidden py-6 sm:pr-6">
         <button
           onClick={() => setShown(!shown)}
           className="flex items-center px-3 py-2 border outline-none rounded text-black border-black  hover:border-white"
