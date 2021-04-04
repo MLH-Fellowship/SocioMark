@@ -1,9 +1,8 @@
 from fastapi import FastAPI
-# from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse
 from .routes.user import router as UserRouter
-from .routes.users import router as UsersRouter
 from .routes.post import router as PostRouter
-from .routes.posts import router as PostsRouter
+from .routes.suggestions import router as SuggestionsRouter
 from .routes.like import router as LikeRouter
 from .routes.comment import router as CommentRouter
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,30 +19,39 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+# Include Likes and Comments Router within Post
+PostRouter.include_router(LikeRouter, prefix="")
+PostRouter.include_router(CommentRouter, prefix="")
+
+# Three major tags
 app.include_router(UserRouter, tags=["User"], prefix="/user")
-app.include_router(UsersRouter, tags=["Users"], prefix="/users")
 app.include_router(PostRouter, tags=["Post"], prefix="/post")
-app.include_router(PostsRouter, tags=["Posts"], prefix="/posts")
-app.include_router(LikeRouter, tags=["Like/Unlike"], prefix="/like_unlike")
-app.include_router(CommentRouter, tags=["Comment"], prefix="/comment_uncomment")
+app.include_router(SuggestionsRouter, tags=["Suggestions"], prefix="/suggestions")
 
 
 @app.get("/", tags=["Root"])
 async def read_root():
-    return {"message": "Welcome to this fantastic app!"}
-
-
-# @app.get("/")
-# async def home():
-#     data = {
-#         "text": "hi"
-#     }
-#     return {"data": data}
-
-
-# @app.get("/page/{page_name}")
-# async def page(page_name: str):
-#     data = {
-#         "page": page_name
-#     }
-#     return {"data": data}
+    return HTMLResponse(
+        """
+        <style>
+            html {
+                background: cornsilk;
+            }
+            .heading {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                font-family: 'K2D'
+            }
+        </style>
+        <heading>
+            <link href="https://fonts.googleapis.com/css?family=K2D:300,400,500,700,800" rel="stylesheet">
+        </heading>
+        <div class="heading">
+            <h1>You are visiting SocioMark's Backend.<h1>
+            <h3>visit <a href="/docs">/docs</a> for more info<h3>
+        </div>
+        """
+    )
