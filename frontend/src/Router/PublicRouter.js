@@ -1,9 +1,10 @@
 import { useRoutes, useRedirect, navigate } from "hookrouter";
 import React from "react";
 import Home from "../Components/Common/Home";
-import Navbar from "../Components/Common/Navbar";
+import PublicNavbar from "../Components/Navbars/PublicNavbar";
 import Login from "../Components/Account/Login";
 import Register from "../Components/Account/Register";
+
 const routes = {
   "/home": () => <Home />,
   "/login": () => <Login />,
@@ -16,7 +17,7 @@ const PublicRouter = () => {
   !pages && navigate("/");
   return (
     <div className="relative bg-gray-200 min-h-screen pb-24">
-      <Navbar />
+      <PublicNavbar />
       {pages}
       {!pages && (
         <div className="flex justify-center py-16">

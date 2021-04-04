@@ -23,6 +23,7 @@ export default function Login() {
       .then((resp) => {
         localStorage.setItem("access_token", resp.data.data.access_token);
         navigate("/home");
+        window.location.reload();
       })
       .catch((err) => {
         setFormError(true);
