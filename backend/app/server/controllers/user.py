@@ -3,6 +3,7 @@ from ..database import users_collection
 from fastapi import HTTPException, status
 from .auth import auth_handler
 from .post import retrieve_posts
+from .like import user_helper_lightweight
 
 # helpers
 
@@ -22,11 +23,14 @@ def user_helper(user, posts=None) -> dict:
 
 
 # Retrieve all users present in the database
-async def retrieve_users():
+async def retrieve_users(lightweight: bool = False):
     users = []
     async for user in users_collection.find():
-        posts_by_user = await retrieve_posts(user["_id"])
-        users.append(user_helper(user, posts=posts_by_user))
+        if lightweight:
+            users.append(user_helper_lightweight(user))
+        else:
+            posts_by_user = await retrieve_posts(user["_id"])
+            users.append(user_helper(user, posts=posts_by_user))
     return users
 
 
