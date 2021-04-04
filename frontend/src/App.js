@@ -1,7 +1,9 @@
 import PublicRouter from "./Router/PublicRouter";
+import PrivateRouter from "./Router/PrivateRouter";
 
 function App() {
-  return <PublicRouter />;
+  const access = localStorage.getItem("access_token");
+  return <div>{access ? <PrivateRouter /> : <PublicRouter />}</div>;
 }
 
 export default App;

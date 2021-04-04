@@ -38,6 +38,7 @@ async def add_user(user_data: dict) -> dict:
         raise HTTPException(status_code=422, detail='Password and Confirm Password do not match')
     hashed_password = auth_handler.get_password_hash(user_data["password"])
     user_data["password"] = hashed_password
+    del user_data["confirm_password"]
     user = await users_collection.insert_one(user_data)
     new_user = await users_collection.find_one({"_id": user.inserted_id})
     return user_helper(new_user)
