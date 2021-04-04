@@ -31,6 +31,7 @@ export default function Login() {
       })
       .catch((err) => {
         setFormError(true);
+        setLoading(false);
       });
   };
 
