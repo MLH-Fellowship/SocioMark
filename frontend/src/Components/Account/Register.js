@@ -3,6 +3,7 @@ import { navigate } from "hookrouter";
 import axios from "axios";
 import { validateEmailAddress, validatePassword } from "../Utils/validations";
 import { Loading } from "../Common/Loader";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const initForm = {
@@ -97,11 +98,14 @@ export default function Register() {
           },
         })
         .then((resp) => {
-          console.log(resp.data.message); //later we can change log to notifications
+          toast.success(resp.data.message);
           navigate("/login");
           setLoading(false);
         })
-        .catch((err) => {
+        .catch(({ response }) => {
+          if (response) {
+            toast.error("Status " + response.status + " (" + response.statusText + "): " + JSON.stringify(response.data.detail));
+          }
           setFormError(true);
           setLoading(false);
         });
