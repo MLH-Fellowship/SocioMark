@@ -6,7 +6,14 @@ from ..database import likes_collection, users_collection
 
 # lightweight mode defined here due to circular dependencies
 # besides, only likes API should return lightweight user details
-def user_helper_lightweight(like_id, user) -> dict:
+def user_helper_lightweight(user, like_id: ObjectId = None) -> dict:
+    if not like_id:
+        return {
+            "user_id": str(user["_id"]),
+            "name": user["name"],
+            "email": user["email"],
+            "profile_picture": user["profile_picture"]
+        }
     return {
         "like_id": str(like_id),
         "user_id": str(user["_id"]),
@@ -19,7 +26,7 @@ def user_helper_lightweight(like_id, user) -> dict:
 async def retrieve_user_lightweight(like_id: ObjectId, user_id: ObjectId):
     user = await users_collection.find_one({"_id": user_id})
     if user:
-        return user_helper_lightweight(like_id, user)
+        return user_helper_lightweight(user, like_id)
 
 
 def like_helper(like) -> dict:
