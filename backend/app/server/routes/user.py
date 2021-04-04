@@ -11,6 +11,7 @@ from ..controllers.user import (
     retrieve_user,
     update_user
 )
+from ..controllers.post import retrieve_posts
 
 from ..controllers.upload import upload_image
 from ..controllers.auth import auth_handler
@@ -63,3 +64,9 @@ async def update_user_data(updated_user: UpdateUserModel = Body(...), current_us
 async def details_user_data(user_id: str):
     new_user = await retrieve_user(user_id)
     return ResponseModel(new_user, "Got user details successfully.")
+
+
+@router.get("/posts", response_description="Get all posts by user from the database")
+async def get_all_posts(user_id: str):
+    all_posts = await retrieve_posts(user_id)
+    return ResponseModel(all_posts, "Got all post details successfully.")
