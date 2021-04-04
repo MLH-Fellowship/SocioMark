@@ -1,6 +1,5 @@
 import { useRoutes, useRedirect, navigate } from "hookrouter";
 import React from "react";
-import Home from "../Components/Common/Home";
 import UserNavbar from "../Components/Navbars/UserNavbar";
 import UserFeed from "../Components/UserFeed";
 import UserProfile from "../Components/UserProfile";
