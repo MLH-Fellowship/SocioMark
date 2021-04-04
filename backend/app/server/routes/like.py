@@ -13,7 +13,7 @@ from ..models.like import (
 router = APIRouter()
 
 
-@router.post("/", response_description="Like/Unlike the post")
+@router.post("/like_unlike", response_description="Like/Unlike the post")
 async def like_unlike_post_data(like_details: LikeSchema = Body(...), current_user=Depends(auth_handler.auth_wrapper)):
     like_details = jsonable_encoder(like_details)
     new_like = await like_unlike_post(current_user, like_details)

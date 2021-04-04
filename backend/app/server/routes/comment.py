@@ -14,14 +14,14 @@ from ..models.comment import (
 router = APIRouter()
 
 
-@router.post("/add", response_description="Add a comment to a post")
+@router.post("/comment", response_description="Add a comment to a post")
 async def add_comment_post_data(comment_details: CommentSchema = Body(...), current_user=Depends(auth_handler.auth_wrapper)):
     comment_details = jsonable_encoder(comment_details)
     new_comment = await add_comment(current_user, comment_details)
     return ResponseModel(new_comment, "Comment added successfully.")
 
 
-@router.delete("/delete", response_description="Delete a comment from a post")
+@router.delete("/uncomment", response_description="Delete a comment from a post")
 async def delete_comment_post_data(comment_id: str, current_user=Depends(auth_handler.auth_wrapper)):
     new_comment = await delete_comment(current_user, comment_id)
     return ResponseModel(new_comment, "Comment deleted successfully.")

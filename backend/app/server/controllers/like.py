@@ -6,8 +6,9 @@ from ..database import likes_collection, users_collection
 
 # lightweight mode defined here due to circular dependencies
 # besides, only likes API should return lightweight user details
-def user_helper_lightweight(user) -> dict:
+def user_helper_lightweight(like_id, user) -> dict:
     return {
+        "like_id": str(like_id),
         "user_id": str(user["_id"]),
         "name": user["name"],
         "email": user["email"],
@@ -15,10 +16,10 @@ def user_helper_lightweight(user) -> dict:
     }
 
 
-async def retrieve_user_lightweight(user_id: ObjectId):
+async def retrieve_user_lightweight(like_id: ObjectId, user_id: ObjectId):
     user = await users_collection.find_one({"_id": user_id})
     if user:
-        return user_helper_lightweight(user)
+        return user_helper_lightweight(like_id, user)
 
 
 def like_helper(like) -> dict:
@@ -33,7 +34,7 @@ async def get_all_likes_on_post(post_id: ObjectId):
     likes = []
     async for like in likes_collection.find({"post_id": post_id}, {"user_id", "is_liked"}):
         if like["is_liked"] is True:
-            likes.append(await retrieve_user_lightweight(like["user_id"]))
+            likes.append(await retrieve_user_lightweight(like["_id"], like["user_id"]))
     return likes
 
 
