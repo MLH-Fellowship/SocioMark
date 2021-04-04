@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { navigate, A } from "hookrouter";
 import axios from "axios";
 import { Loading } from "../Common/Loader";
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const initForm = {
@@ -24,13 +25,17 @@ export default function Login() {
     axios
       .post("http://localhost:8000/user/login", { ...form })
       .then((resp) => {
+        toast.success(JSON.stringify(resp.data.message));
         localStorage.setItem("access_token", resp.data.data.access_token);
         navigate("/home");
         setLoading(false);
         window.location.reload();
       })
-      .catch((err) => {
+      .catch(({ response }) => {
         setFormError(true);
+        if (response) {
+          toast.error("Status " + response.status + " (" + response.statusText + "): " + JSON.stringify(response.data.detail));
+        }
         setLoading(false);
       });
   };
