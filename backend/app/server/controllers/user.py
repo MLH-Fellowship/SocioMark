@@ -64,6 +64,13 @@ async def retrieve_user(id: str) -> dict:
         posts_by_user = await retrieve_posts(user["_id"])
         return user_helper(user, posts=posts_by_user)
 
+# Retrieve details of current_user
+async def get_current_user(email: str) -> dict:
+    user = await users_collection.find_one({"email": email})
+    if user:
+        posts_by_user = await retrieve_posts(user["_id"])
+        return user_helper(user, posts=posts_by_user)
+
 
 # Update a user with a matching ID
 async def update_user(email: str, data: dict):
