@@ -103,7 +103,7 @@ export default function Register() {
         })
         .catch(({ response }) => {
           if (response) {
-            toast.error("Status " + response.status + " (" + response.statusText + "): " + JSON.stringify(response.data.detail));
+            toast.error(JSON.stringify(response.data.detail));
           }
           setLoading(false);
         });
