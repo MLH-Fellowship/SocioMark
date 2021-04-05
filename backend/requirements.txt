@@ -8,3 +8,4 @@ PyJWT==2.0.1
 python-dotenv==0.15.0
 python-multipart==0.0.5
 cloudinary==1.25.0
+flake8==3.8.4
