@@ -3,6 +3,7 @@ import { navigate } from "hookrouter";
 import axios from "axios";
 import { validateEmailAddress, validatePassword } from "../Utils/validations";
 import { Loading } from "../Common/Loader";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const initForm = {
@@ -22,7 +23,6 @@ export default function Register() {
   };
 
   const [form, setForm] = useState(initForm);
-  const [formError, setFormError] = useState(false);
   const [fileInterface, setFile] = useState({ fileUpload: null });
   const [error, setError] = useState(initError);
   const [loading, setLoading] = useState(false);
@@ -97,15 +97,16 @@ export default function Register() {
           },
         })
         .then((resp) => {
-          console.log(resp.data.message); //later we can change log to notifications
+          toast.success(resp.data.message);
           navigate("/login");
           setLoading(false);
         })
-        .catch((err) => {
-          setFormError(true);
+        .catch(({ response }) => {
+          if (response) {
+            toast.error(JSON.stringify(response.data.detail));
+          }
           setLoading(false);
         });
-      setFormError(false);
     }
   };
 
@@ -234,11 +235,6 @@ export default function Register() {
                 </div>
               </div>
 
-              {formError && (
-                <div className="text-red-400 font-semibold">
-                  Something went Wrong
-                </div>
-              )}
               <div className="flex items-center justify-between mt-4">
                 <button
                   type="submit"

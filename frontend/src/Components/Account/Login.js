@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { navigate, A } from "hookrouter";
 import axios from "axios";
 import { Loading } from "../Common/Loader";
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const initForm = {
@@ -9,7 +10,6 @@ export default function Login() {
     password: "",
   };
   const [form, setForm] = useState(initForm);
-  const [formError, setFormError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -24,13 +24,16 @@ export default function Login() {
     axios
       .post("http://localhost:8000/user/login", { ...form })
       .then((resp) => {
+        toast.success(JSON.stringify(resp.data.message));
         localStorage.setItem("access_token", resp.data.data.access_token);
         navigate("/home");
         setLoading(false);
         window.location.reload();
       })
-      .catch((err) => {
-        setFormError(true);
+      .catch(({ response }) => {
+        if (response) {
+          toast.error(JSON.stringify(response.data.detail));
+        }
         setLoading(false);
       });
   };
@@ -81,11 +84,6 @@ export default function Login() {
                 />
               </div>
 
-              {formError && (
-                <div className="text-red-400 font-semibold">
-                  Invalid Credentials
-                </div>
-              )}
               <div className="flex items-center justify-between mt-4">
                 <button
                   type="submit"
