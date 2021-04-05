@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pridi:wght@300&family=Roboto+Condensed:wght@300&display=swap');
+#home {
+    background-image: url("Landing Page.png");
+    /* background-size: cover; */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover cover;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+p {
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+#welcome {
+    font-size: 70px;
+    padding-top: 50px;
+}
+#logo {
+    font-size: 80px;
+    font-family: 'Pridi', sans-serif;
+    padding-top: 20px;
+}
+
+#para {
+    margin-top: 60px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 120px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#explore {
+    color: #8435E9;
+    background-color: white;
+    padding: 25px;
+    width: 15%;
+    font-size: 30px;
+    margin-left: 600px;
+    margin-right: auto;
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-bottom: 50px;
+}
