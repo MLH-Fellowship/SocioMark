@@ -58,6 +58,6 @@ async def details_post_data(post_id: str):
 
 
 @router.get("/all", response_description="Get all the posts from the database")
-async def details_all_posts_data():
+async def details_all_posts_data(current_user=Depends(auth_handler.auth_wrapper)):
     all_posts = await retrieve_all_posts()
     return ResponseModel(all_posts, "Got all posts successfully.")
