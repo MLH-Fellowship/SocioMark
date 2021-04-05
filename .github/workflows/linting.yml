@@ -1,0 +1,53 @@
+name: Lintings
+
+on: push
+
+jobs:
+  run-server-linters:
+    name: (Python) Server Linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+
+      # flake8 for Python server
+      - name: Install Python (server) dependencies
+        run: pip install flake8
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v1
+        with:
+          flake8: true
+          flake8_args: "--ignore E501"
+          flake8_dir: backend/
+
+  run-client-linters:
+    name: (JavaScript) Client Linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      # ESLint and Prettier must be in `package.json`
+      - name: Install Node.js (client) dependencies
+        run: npm ci --prefix frontend/
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v1
+        with:
+          eslint: true
+          prettier: true
+          eslint_dir: frontend/
+          prettier_dir: frontend/
