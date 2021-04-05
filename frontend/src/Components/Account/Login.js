@@ -10,7 +10,6 @@ export default function Login() {
     password: "",
   };
   const [form, setForm] = useState(initForm);
-  const [formError, setFormError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -32,7 +31,6 @@ export default function Login() {
         window.location.reload();
       })
       .catch(({ response }) => {
-        setFormError(true);
         if (response) {
           toast.error("Status " + response.status + " (" + response.statusText + "): " + JSON.stringify(response.data.detail));
         }
@@ -86,11 +84,6 @@ export default function Login() {
                 />
               </div>
 
-              {formError && (
-                <div className="text-red-400 font-semibold">
-                  Invalid Credentials
-                </div>
-              )}
               <div className="flex items-center justify-between mt-4">
                 <button
                   type="submit"

@@ -23,7 +23,6 @@ export default function Register() {
   };
 
   const [form, setForm] = useState(initForm);
-  const [formError, setFormError] = useState(false);
   const [fileInterface, setFile] = useState({ fileUpload: null });
   const [error, setError] = useState(initError);
   const [loading, setLoading] = useState(false);
@@ -106,10 +105,8 @@ export default function Register() {
           if (response) {
             toast.error("Status " + response.status + " (" + response.statusText + "): " + JSON.stringify(response.data.detail));
           }
-          setFormError(true);
           setLoading(false);
         });
-      setFormError(false);
     }
   };
 
@@ -238,11 +235,6 @@ export default function Register() {
                 </div>
               </div>
 
-              {formError && (
-                <div className="text-red-400 font-semibold">
-                  Something went Wrong
-                </div>
-              )}
               <div className="flex items-center justify-between mt-4">
                 <button
                   type="submit"
