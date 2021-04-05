@@ -7,6 +7,7 @@ from ..controllers.post import (
     add_post,
     delete_post,
     retrieve_post,
+    retrieve_all_posts,
     update_post,
     report_post
 )
@@ -54,3 +55,9 @@ async def report_post_data(post_id: str):
 async def details_post_data(post_id: str):
     new_post = await retrieve_post(post_id)
     return ResponseModel(new_post, "Got post details successfully.")
+
+
+@router.get("/all", response_description="Get all the posts from the database")
+async def details_all_posts_data(current_user=Depends(auth_handler.auth_wrapper)):
+    all_posts = await retrieve_all_posts()
+    return ResponseModel(all_posts, "Got all posts successfully.")
