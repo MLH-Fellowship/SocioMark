@@ -26,6 +26,7 @@ async def retrieve_user_lightweight(user_id: ObjectId, comment_id: ObjectId, com
 
 def comment_helper(comment) -> dict:
     return {
+        "comment_id": str(comment["_id"]),
         "post_id": str(comment["post_id"]),
         "user_id": str(comment["user_id"]),
         "payload": comment["payload"],
