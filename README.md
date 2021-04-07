@@ -1,6 +1,6 @@
 # SocioMark
 
-SocioMark is an all-new social media platform that prioritizes image ownership and security using Machine Learning. By watermarking each image upon upload, the hash of the user is permanently encoded within the image. 
+SocioMark is an all-new social media platform that prioritizes image ownership and security using Machine Learning. By watermarking each image upon upload, the hash of the user is permanently encoded within the image and essentially lets photographers copyright their images. 
 
 ## How it Works
 1. Users are first shown a landing page that requires the user to Login, Register with a new account, or learn more about the platform.
