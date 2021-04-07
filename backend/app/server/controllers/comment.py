@@ -7,31 +7,30 @@ from ..database import comments_collection, users_collection
 
 # lightweight modes defined here due to circular dependencies
 # Only Likes and Comments APIs should return lightweight user details
-def user_helper_lightweight(user, comment_id, payload) -> dict:
+def user_helper_lightweight(user, comment) -> dict:
+    if "post_id" in comment.keys():
+        return {
+            "comment_id": str(comment["_id"]),
+            "post_id": str(comment["post_id"]),
+            "user_id": str(user["_id"]),
+            "name": user["name"],
+            "profile_picture": user["profile_picture"],
+            "payload": comment["payload"],
+            "is_commented": comment["is_commented"]
+        }
     return {
-        "comment_id": str(comment_id),
+        "comment_id": str(comment["_id"]),
         "user_id": str(user["_id"]),
         "name": user["name"],
-        "email": user["email"],
         "profile_picture": user["profile_picture"],
-        "payload": payload
+        "payload": comment["payload"]
     }
 
 
 async def retrieve_user_lightweight(user_id: ObjectId, comment_id: ObjectId, comment_payload: str):
     user = await users_collection.find_one({"_id": user_id})
     if user:
-        return user_helper_lightweight(user, comment_id, comment_payload)
-
-
-def comment_helper(comment) -> dict:
-    return {
-        "comment_id": str(comment["_id"]),
-        "post_id": str(comment["post_id"]),
-        "user_id": str(comment["user_id"]),
-        "payload": comment["payload"],
-        "is_commented": comment["is_commented"]
-    }
+        return user_helper_lightweight(user, {"_id": comment_id, "payload": comment_payload})
 
 
 async def get_all_comments_on_post(post_id: ObjectId):
@@ -56,7 +55,7 @@ async def add_comment(email: str, comment_details: dict):
     comment_details = await initialize_comment(user["_id"], ObjectId(comment_details["post_id"]), comment_details)
     new_comment = await comments_collection.insert_one(comment_details)
     return_comment = await comments_collection.find_one({"_id": new_comment.inserted_id})
-    return comment_helper(return_comment)
+    return user_helper_lightweight(user, return_comment)
 
 
 # Delete the post from comment model
