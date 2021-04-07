@@ -99,7 +99,7 @@ export default function Post({ post_initializer }) {
               </h3>
             </div>
             <div className="flex gap-x-6">
-              { post.likes.length }
+              {post.likes.length}
               <A
                 href="#"
                 onClick={() => {
