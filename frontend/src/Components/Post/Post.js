@@ -1,6 +1,13 @@
-import React from "react";
+import React,{useState,useContext} from "react";
+import axios from "axios";
+import { AuthContext } from "../../Context/AuthContext";
+import { toast } from 'react-toastify';
+import CreateComment from "./CreateComment";
+
 
 export default function Post({post}) {
+    const {  value2 } = useContext(AuthContext);
+    const [access] = value2;
 
   return (
 
@@ -29,6 +36,7 @@ export default function Post({post}) {
               <span className="font-semibold">{post.author_name}: </span>
               {post.description}
           </div>
+         <CreateComment post={post}/>
         </div>
       </div>
     </div>
