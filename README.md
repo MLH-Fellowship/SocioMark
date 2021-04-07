@@ -45,7 +45,7 @@ SocioMark is an all-new social media platform that prioritizes image ownership a
 - Designing a viable user flow throughout the application
 
 ## Credits
-- Aitik Gupta
-- Bodhisha Thomas
-- Deepak Agrawal
-- Sumi Kolli
+- [Aitik Gupta](https://github.com/aitikgupta)
+- [Bodhisha Thomas](https://github.com/bodhisha)
+- [Deepak Agrawal](https://github.com/DebugAgrawal)
+- [Sumi Kolli](https://github.com/sgkolli535)
