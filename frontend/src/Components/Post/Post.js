@@ -1,16 +1,9 @@
 import React,{useState,useContext} from "react";
-import axios from "axios";
-import { AuthContext } from "../../Context/AuthContext";
-import { toast } from 'react-toastify';
 import CreateComment from "./CreateComment";
 
-
 export default function Post({post}) {
-    const {  value2 } = useContext(AuthContext);
-    const [access] = value2;
 
   return (
-
     <div>
       <div className="max-w-3xl mx-auto justify-center">
         <div className="rounded-lg bg-white shadow border p-4 mt-4 ">
@@ -31,11 +24,12 @@ export default function Post({post}) {
               <span className="font-semibold">@{post.author_name}: </span>
               {post.description}
           </div>
-          
-          <div className="text-md font-normal mt-1 border-t border-gray-200">
-              <span className="font-semibold">{post.author_name}: </span>
-              {post.description}
-          </div>
+         {post.comments.map((comment)=>{
+             return(<div className="text-md font-normal mt-1 border-t border-gray-200">
+             <span className="font-semibold">{comment.name}: </span>
+             {comment.payload}
+         </div>)
+         })}
          <CreateComment post={post}/>
         </div>
       </div>

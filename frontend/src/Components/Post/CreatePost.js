@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { navigate } from "hookrouter";
+import {navigate} from "hookrouter"
+import { toast } from 'react-toastify';
+import { Loading } from "../Common/Loader";
 
 export default function CreatePost() {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState({ fileUpload: null });
   const access = localStorage.getItem("access_token");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setDescription(e.target.value);
@@ -20,6 +23,7 @@ export default function CreatePost() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     var bodyFormData = new FormData();
     bodyFormData.append("description", description);
     if (file.fileUpload) {
@@ -33,15 +37,22 @@ export default function CreatePost() {
           Authorization: "Bearer " + access,
         },
       })
-      .then((resp) => {
-        console.log(resp.data.message); //later we can change log to notifications
-        navigate("/profile");
+      .then((res) => {
+        setLoading(false);
+        toast.success(JSON.stringify(res.data.message));
+        window.location.reload();
       })
-      .catch((err) => {});
+      .catch(({ response }) => {
+        if (response) {
+          toast.error(JSON.stringify(response.data.detail));
+        }
+        setLoading(false);
+      });
   };
 
   return (
     <div>
+      {loading?<Loading/> : <div>
       <div class="max-w-3xl w-full mx-auto relative bg-white shadow rounded-lg">
         <form onSubmit={handleSubmit} class="flex w-full flex-col p-4 md:p-6">
           <textarea
@@ -74,6 +85,7 @@ export default function CreatePost() {
           </div>
         </form>
       </div>
+    </div>}
     </div>
   );
 }

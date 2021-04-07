@@ -1,4 +1,5 @@
 import React,{useState,useContext} from "react";
+import {navigate} from "hookrouter"
 import axios from "axios";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from 'react-toastify';
@@ -27,6 +28,7 @@ export default function CreateComment({post}) {
         })
         .then((res) => {
             toast.success(JSON.stringify(res.data.message));
+            window.location.reload();
         })
         .catch((err) => {});
     };
