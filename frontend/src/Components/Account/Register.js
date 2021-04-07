@@ -4,6 +4,7 @@ import axios from "axios";
 import { validateEmailAddress, validatePassword } from "../Utils/validations";
 import { Loading } from "../Common/Loader";
 import { toast } from "react-toastify";
+import { REGISTER_URL } from "../../constants";
 
 export default function Register() {
   const initForm = {
@@ -90,7 +91,7 @@ export default function Register() {
         bodyFormData.append("image", fileInterface.fileUpload);
       }
       axios
-        .post("http://localhost:8000/user/register", bodyFormData, {
+        .post(REGISTER_URL, bodyFormData, {
           headers: {
             accept: "application/json",
             "Content-Type": "multipart/form-data",

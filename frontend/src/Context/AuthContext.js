@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
+import { CURRENT_USER_URL } from "../constants";
 export const AuthContext = createContext();
 
 export const AuthProvider = (props) => {
@@ -8,8 +9,7 @@ export const AuthProvider = (props) => {
   useEffect(() => {
     if (access) {
       axios
-        .get("http://localhost:8000/user/current_user", {
-          //Change to "https://sociomark-backend.herokuapp.com/user/current_user/"" once the backend is deployed
+        .get(CURRENT_USER_URL, {
           headers: {
             Authorization: "Bearer " + access,
           },
