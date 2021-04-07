@@ -7,8 +7,8 @@ import { Loading } from "../Components/Common/Loader"
 
 
 export default function UserFeed() {
-  const {  value2 } = useContext(AuthContext);
-  const [access] = value2;
+  const { token } = useContext(AuthContext);
+  const [access] = token;
   const [posts,setPosts] = useState([])
   const [loading, setLoading] = useState(false);
 
@@ -18,22 +18,27 @@ export default function UserFeed() {
     axios.get("http://localhost:8000/post/all",{
       headers: {
         Authorization: "Bearer " + access,
-      }}).then(res => {
+      }
+    }).then(res => {
     setPosts(res.data.data);
     setLoading(false);
-
   })
 }, []);
 
+
+  const handleCreatePost = (new_post) => {
+    const new_posts = [new_post, ...posts];
+    setPosts(new_posts);
+  };
 
   return (
     <div>
       {loading? <Loading/> : <div>
         <div className="max-w-5xl mx-auto p-2">
-        <CreatePost />
+        <CreatePost handleCreatePost={handleCreatePost} />
       </div>
-      {posts.reverse().map((post) => {
-        return <Post post={post}/>
+        {posts.map((post) => {
+          return <Post post_initializer={post}/>
       })}
         </div>
       }
