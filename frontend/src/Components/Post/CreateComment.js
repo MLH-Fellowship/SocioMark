@@ -1,13 +1,12 @@
 import React,{useState,useContext} from "react";
-import {navigate} from "hookrouter"
 import axios from "axios";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from 'react-toastify';
 
-export default function CreateComment({post}) {
+export default function CreateComment({handleCreateComment, post}) {
     const [comment, setComment] = useState("");
-    const {  value2 } = useContext(AuthContext);
-    const [access] = value2;
+    const { token } = useContext(AuthContext);
+    const [access] = token;
     const handleChange = (e) => {
         setComment(e.target.value);
       };
@@ -16,10 +15,10 @@ export default function CreateComment({post}) {
         post_id : post.post_id, 
         payload : comment
     }
-    const post_id = post.post_id 
 
     const handleSubmit = (e) => {
     e.preventDefault();
+    setComment("");
     axios
         .post("http://localhost:8000/post/comment", FormData, {
         headers: {
@@ -28,7 +27,7 @@ export default function CreateComment({post}) {
         })
         .then((res) => {
             toast.success(JSON.stringify(res.data.message));
-            window.location.reload();
+            handleCreateComment(res.data.data);
         })
         .catch((err) => {});
     };
