@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AuthContext, AuthProvider } from "../Context/AuthContext";
+import { AuthContext } from "../Context/AuthContext";
 
 export default function UserFeed() {
   const { value1, value2 } = useContext(AuthContext);

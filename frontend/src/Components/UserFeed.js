@@ -4,6 +4,7 @@ import Post from "./Post/Post";
 import CreatePost from "./Post/CreatePost";
 import { AuthContext } from "../Context/AuthContext";
 import { Loading } from "../Components/Common/Loader";
+import { POST_GET_ALL_URL } from "../constants";
 
 export default function UserFeed() {
   const { token } = useContext(AuthContext);
@@ -14,7 +15,7 @@ export default function UserFeed() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/post/all", {
+      .get(POST_GET_ALL_URL, {
         headers: {
           Authorization: "Bearer " + access,
         },
@@ -23,6 +24,7 @@ export default function UserFeed() {
         setPosts(res.data.data);
         setLoading(false);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCreatePost = (new_post) => {

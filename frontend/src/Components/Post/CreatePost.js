@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Loading } from "../Common/Loader";
 import { AuthContext } from "../../Context/AuthContext";
+import { POST_CREATE_URL } from "../../constants";
 
 export default function CreatePost({ handleCreatePost }) {
   const [description, setDescription] = useState("");
@@ -31,7 +32,7 @@ export default function CreatePost({ handleCreatePost }) {
       bodyFormData.append("image", file.fileUpload);
     }
     axios
-      .post("http://localhost:8000/post/create", bodyFormData, {
+      .post(POST_CREATE_URL, bodyFormData, {
         headers: {
           accept: "application/json",
           "Content-Type": "multipart/form-data",

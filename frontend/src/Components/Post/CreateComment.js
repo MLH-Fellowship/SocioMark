@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
+import { POST_COMMENT_URL } from "../../constants";
 
 export default function CreateComment({ handleCreateComment, post }) {
   const [comment, setComment] = useState("");
@@ -20,7 +21,7 @@ export default function CreateComment({ handleCreateComment, post }) {
     e.preventDefault();
     setComment("");
     axios
-      .post("http://localhost:8000/post/comment", FormData, {
+      .post(POST_COMMENT_URL, FormData, {
         headers: {
           Authorization: "Bearer " + access,
         },

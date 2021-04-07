@@ -4,6 +4,7 @@ import CreateComment from "./CreateComment";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
+import { POST_UNCOMMENT_URL } from "../../constants";
 
 export default function Post({ post_initializer }) {
   const { token } = useContext(AuthContext);
@@ -18,7 +19,7 @@ export default function Post({ post_initializer }) {
 
   const handleDeleteComment = (comment_id) => {
     axios
-      .delete("http://localhost:8000/post/uncomment", {
+      .delete(POST_UNCOMMENT_URL, {
         headers: {
           accept: "application/json",
           Authorization: "Bearer " + access,
