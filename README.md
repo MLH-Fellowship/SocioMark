@@ -1,8 +1,9 @@
 # SocioMark
 
-Social Media Platform with watermark on each image uploaded, with the hash of the user. 
+SocioMark is an all-new social media platform that prioritizes image ownership and security. By watermarking each image upon upload, the hash of the user is permanently encoded within the image. 
 
 ## Features
+- Login functionality 
 
 ## Tech Stack
 - Frontend : Reactjs
@@ -15,3 +16,9 @@ Social Media Platform with watermark on each image uploaded, with the hash of th
 - Run command to install all the dependencies  ```pip install -r requirements.txt``` 
 - Run the entry point ```python app/main.py```
 - Navigate to ```http://localhost:8000/docs``` to view the swagger api end points
+
+## Usage
+
+## Credits
+
+## License
