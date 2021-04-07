@@ -5,12 +5,18 @@ import axios from "axios";
 import { A } from "hookrouter";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
-import { POST_UNCOMMENT_URL, POST_LIKE_UNLIKE_URL } from "../../constants";
+import {
+  POST_UNCOMMENT_URL,
+  POST_LIKE_UNLIKE_URL,
+  POST_REPORT_URL,
+  POST_REPORT_COOLDOWN,
+} from "../../constants";
 
 export default function Post({ post_initializer }) {
   const { user, token } = useContext(AuthContext);
   const [access] = token;
   const [post, setPost] = useState(post_initializer);
+  const [fade, setFade] = useState(false);
 
   const handleCreateComment = (new_comment) => {
     let new_post = Object.assign({}, post);
@@ -83,6 +89,32 @@ export default function Post({ post_initializer }) {
       });
   };
 
+  const handleReport = (post_id) => {
+    axios
+      .post(
+        POST_REPORT_URL,
+        { post_id },
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: "Bearer " + access,
+          },
+        }
+      )
+      .then((res) => {
+        toast.warn(JSON.stringify(res.data.message));
+        setFade(true);
+        setTimeout(() => {
+          setFade(false);
+        }, POST_REPORT_COOLDOWN);
+      })
+      .catch(({ response }) => {
+        if (response) {
+          toast.error(JSON.stringify(response.data.detail));
+        }
+      });
+  };
+
   return (
     <div>
       <div className="max-w-3xl mx-auto justify-center">
@@ -131,15 +163,34 @@ export default function Post({ post_initializer }) {
                   </svg>
                 )}
               </A>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                fill="currentColor"
-                className="bi bi-flag-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001" />
-              </svg>
+              {fade ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  fill="gray"
+                  className="bi bi-flag-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001" />
+                </svg>
+              ) : (
+                <A
+                  href="#"
+                  onClick={() => {
+                    handleReport(post.post_id);
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    fill="currentColor"
+                    className="bi bi-flag-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001" />
+                  </svg>
+                </A>
+              )}
             </div>
           </div>
           <div className="mx-auto">
