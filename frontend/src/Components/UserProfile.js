@@ -1,14 +1,12 @@
 import React, { useContext } from "react";
-import { AuthContext, AuthProvider } from "../Context/AuthContext";
+import { AuthContext } from "../Context/AuthContext";
 
 export default function UserFeed() {
-  const { value1, value2 } = useContext(AuthContext);
-  const [user] = value1;
-  const [access] = value2;
+  const { user, token } = useContext(AuthContext);
   return (
     <div>
       <div className="text-2xl font-bold">
-        Hey {user.name} {access}
+        Hey {user[0].name} {token[0]}
       </div>
     </div>
   );

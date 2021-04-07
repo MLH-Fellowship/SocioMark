@@ -16,7 +16,7 @@ def post_helper(post, user, likes=None, comments=None) -> dict:
         "post_id": str(post["_id"]),
         "user_id": str(user["_id"]),
         "author_name": user["name"],
-        "author_email": user["email"],
+        "author_image": user["profile_picture"],
         "report_counter": post["report_counter"],
         "likes": likes,
         "comments": comments,

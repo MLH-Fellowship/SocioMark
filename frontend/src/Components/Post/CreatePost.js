@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import {navigate} from "hookrouter"
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { Loading } from "../Common/Loader";
+import { AuthContext } from "../../Context/AuthContext";
+import { POST_CREATE_URL } from "../../constants";
 
-export default function CreatePost() {
+export default function CreatePost({ handleCreatePost }) {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState({ fileUpload: null });
-  const access = localStorage.getItem("access_token");
+  const { token } = useContext(AuthContext);
+  const [access] = token;
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -30,7 +32,7 @@ export default function CreatePost() {
       bodyFormData.append("image", file.fileUpload);
     }
     axios
-      .post("http://localhost:8000/post/create", bodyFormData, {
+      .post(POST_CREATE_URL, bodyFormData, {
         headers: {
           accept: "application/json",
           "Content-Type": "multipart/form-data",
@@ -40,7 +42,7 @@ export default function CreatePost() {
       .then((res) => {
         setLoading(false);
         toast.success(JSON.stringify(res.data.message));
-        window.location.reload();
+        handleCreatePost(res.data.data);
       })
       .catch(({ response }) => {
         if (response) {
@@ -52,40 +54,47 @@ export default function CreatePost() {
 
   return (
     <div>
-      {loading?<Loading/> : <div>
-      <div class="max-w-3xl w-full mx-auto relative bg-white shadow rounded-lg">
-        <form onSubmit={handleSubmit} class="flex w-full flex-col p-4 md:p-6">
-          <textarea
-            aria-label="description"
-            onChange={handleChange}
-            name="description"
-            value={description}
-            type="description"
-            className="appearance-none block w-full bg-white text-red-900 font-normal border border-primary-400 rounded py-3 px-4 mb-4 leading-tight focus:outline-none focus:bg-white focus:border-primary-500"
-            placeholder="Description..."
-          />
-          <div class="md:flex justify-between items-center">
-            <div class="md:w-2/3">
-              <span class="w-full">
-                <input
-                  aria-label="profile_picture"
-                  name="profile_picture"
-                  onChange={handleFileUpload}
-                  type="file"
-                  accept="image/*"
-                  className="appearance-none border rounded py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                />{" "}
-              </span>
-            </div>
-            <div class="w-1/4 mt-2 md:mt-0">
-              <button className="bg-green-600 w-full hover:bg-green-500 text-center text-xl font-semibold text-white rounded-md p-2 mt-2 md:mt-0">
-                Submit
-              </button>
-            </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div>
+          <div className="max-w-3xl w-full mx-auto relative bg-white shadow rounded-lg">
+            <form
+              onSubmit={handleSubmit}
+              className="flex w-full flex-col p-4 md:p-6"
+            >
+              <textarea
+                aria-label="description"
+                onChange={handleChange}
+                name="description"
+                value={description}
+                type="description"
+                className="appearance-none block w-full bg-white text-red-900 font-normal border border-primary-400 rounded py-3 px-4 mb-4 leading-tight focus:outline-none focus:bg-white focus:border-primary-500"
+                placeholder="Description..."
+              />
+              <div className="md:flex justify-between items-center">
+                <div className="md:w-2/3">
+                  <span className="w-full">
+                    <input
+                      aria-label="profile_picture"
+                      name="profile_picture"
+                      onChange={handleFileUpload}
+                      type="file"
+                      accept="image/*"
+                      className="appearance-none w-full border rounded py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                    />{" "}
+                  </span>
+                </div>
+                <div className="w-1/4 mt-2 md:mt-0">
+                  <button className="bg-green-600 w-full hover:bg-green-500 text-center text-xl font-semibold text-white rounded-md p-2 mt-2 md:mt-0">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </div>}
+        </div>
+      )}
     </div>
   );
 }
