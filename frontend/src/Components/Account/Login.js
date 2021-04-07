@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { navigate } from "hookrouter";
 import axios from "axios";
 import { Loading } from "../Common/Loader";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { LOGIN_URL } from "../../constants";
 
 export default function Login() {
