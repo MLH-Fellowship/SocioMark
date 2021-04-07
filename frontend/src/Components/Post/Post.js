@@ -49,8 +49,8 @@ export default function Post({ post_initializer }) {
           <div className="flex justify-between w-full items-center px-4">
             <div className="flex">
               <img
-                alt="hello"
-                src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+                alt="author_image"
+                src={post.author_image}
                 className="rounded-full my-2 h-10 w-10 shadow"
               />
               <h3 className="text-xl  font-bold px-2 py-4">
