@@ -20,6 +20,7 @@ export const AuthProvider = (props) => {
           }
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
