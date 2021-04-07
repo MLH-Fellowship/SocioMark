@@ -66,6 +66,7 @@ async def details_user_data(user_id: str):
     new_user = await retrieve_user(user_id)
     return ResponseModel(new_user, "Got user details successfully.")
 
+
 @router.get("/current_user", response_description="Get current_user details from the database")
 async def current_user_data(current_user=Depends(auth_handler.auth_wrapper)):
     current_user = await get_current_user(current_user)
