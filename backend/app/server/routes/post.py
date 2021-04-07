@@ -33,7 +33,7 @@ async def add_post_data(image: UploadFile = File(...), description: str = Form(N
 
 
 @router.delete("/delete", response_description="Delete post from the database")
-async def delete_post_data(post_id: str, current_user=Depends(auth_handler.auth_wrapper)):
+async def delete_post_data(post_id: str = Body(..., embed=True), current_user=Depends(auth_handler.auth_wrapper)):
     new_post = await delete_post(current_user, post_id)
     return ResponseModel(new_post, "Post deleted successfully.")
 
@@ -46,13 +46,13 @@ async def update_post_data(post_id: str, updated_post: UpdatePostModel = Body(..
 
 
 @router.post("/report", response_description="Report post")
-async def report_post_data(post_id: str):
+async def report_post_data(post_id: str = Body(..., embed=True)):
     new_post = await report_post(post_id)
     return ResponseModel(new_post, "Post reported successfully.")
 
 
 @router.get("/details", response_description="Get post details from the database")
-async def details_post_data(post_id: str):
+async def details_post_data(post_id: str = Body(..., embed=True)):
     new_post = await retrieve_post(post_id)
     return ResponseModel(new_post, "Got post details successfully.")
 

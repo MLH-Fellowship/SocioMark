@@ -3,7 +3,7 @@ from dotenv import dotenv_values, find_dotenv
 
 config = dotenv_values(find_dotenv())
 
-MONGO_DETAILS = config["MONGODB_URL"]
+MONGO_DETAILS = "mongodb://localhost:27017"
 
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
 
