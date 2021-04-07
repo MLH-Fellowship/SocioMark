@@ -1,5 +1,11 @@
 import React from "react";
+import UserProfile from "../UserProfile";
 
 export default function Home() {
-  return <h1>SocioMark Home Page (Explore)</h1>;
+  return (
+<div>
+<h1>SocioMark Home Page (Explore)</h1>
+  <UserProfile/>
+</div>
+  );
 }
