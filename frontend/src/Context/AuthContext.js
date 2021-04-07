@@ -23,6 +23,8 @@ export const AuthProvider = (props) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: [user], token: [access] }}>{props.children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user: [user], token: [access] }}>
+      {props.children}
+    </AuthContext.Provider>
   );
 };

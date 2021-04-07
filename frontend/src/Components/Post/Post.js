@@ -4,7 +4,6 @@ import CreateComment from "./CreateComment";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
-  
 
 export default function Post({ post_initializer }) {
   const { token } = useContext(AuthContext);
@@ -19,16 +18,13 @@ export default function Post({ post_initializer }) {
 
   const handleDeleteComment = (comment_id) => {
     axios
-      .delete(
-        "http://localhost:8000/post/uncomment",
-        {
-          headers: {
-            accept: "application/json",
-            Authorization: "Bearer " + access,
-          },
-          data: { comment_id }
-        }
-      )
+      .delete("http://localhost:8000/post/uncomment", {
+        headers: {
+          accept: "application/json",
+          Authorization: "Bearer " + access,
+        },
+        data: { comment_id },
+      })
       .then((res) => {
         toast.info(JSON.stringify(res.data.message));
         let new_post = Object.assign({}, post);
