@@ -16,7 +16,7 @@ const PublicRouter = () => {
   const pages = useRoutes(routes);
   !pages && navigate("/");
   return (
-    <div className="relative bg-gray-200 min-h-screen pb-24">
+    <div className="relative bg-gray-200 min-h-screen">
       <PublicNavbar />
       {pages}
       {!pages && (
