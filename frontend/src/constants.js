@@ -1,4 +1,4 @@
-const ENV = "development";
+const ENV = process.env.NODE_ENV;
 let BASE_URL;
 
 switch (ENV) {
