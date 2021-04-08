@@ -1,9 +1,36 @@
-import React, { useContext } from "react";
+import React, { useEffect,useState,useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import Post from "./Post/Post";
+import axios from "axios";
+import { Loading } from "../Components/Common/Loader";
+import { POST_GET_ALL_URL } from "../constants";
 
 export default function UserProfiele() {
+  
   const { user, token } = useContext(AuthContext);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(POST_GET_ALL_URL, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        setPosts(res.data.data);
+        setLoading(false);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
+    <div>
+     {loading ? (
+        <Loading />
+      ) : (
     <div className="flex flex-col sm:flex-row mx-auto bg-white h-auto text-xl justify-center">
         <div className="flex md:flex-col flex-wrap w-full sm:w-1/2 items-center pt-20 ">
           <div className="flex flex-col md:w-1/2 items-center mx-auto">
@@ -40,24 +67,13 @@ export default function UserProfiele() {
 
       <div className="flex flex-col sm:2/3 w-full pt-20 items-start">
         <div className="flex-1 text-center px-4 py-2 m-2">
-          <img
-            className="sm:w-3/4 w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-        <div className="flex-1 text-center px-4 py-2 m-2 ">
-          <img
-            className="sm:w-3/4 w-full "
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-        <div className="flex-1 text-center px-4 py-2 m-2 ">
-          <img
-            className="sm:w-3/4 w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
+        {posts.filter((posts)=>(posts.user_id===user[0].user_id))
+        .map((post) => {
+            return <Post post_initializer={post} />;
+          })}
         </div>
       </div>
-    </div>
+    </div>)}
+  </div>
   );
 }
