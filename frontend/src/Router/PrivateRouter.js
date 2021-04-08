@@ -6,7 +6,7 @@ import UserProfile from "../Components/UserProfile";
 
 const routes = {
   "/home": () => <UserFeed />,
-  "/profile": () => <UserProfile />,
+  "/user/:id": ({id}) => <UserProfile id={id}/>,
 };
 
 const PrivateRouter = () => {
