@@ -5,7 +5,7 @@ import axios from "axios";
 import { Loading } from "../Components/Common/Loader";
 import { POST_GET_ALL_URL } from "../constants";
 
-export default function UserProfiele() {
+export default function UserProfile() {
   const { user, token } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
