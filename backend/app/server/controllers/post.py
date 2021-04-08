@@ -1,8 +1,13 @@
+import cv2
+import tempfile
 from bson.objectid import ObjectId
 from fastapi import HTTPException
 from ..database import posts_collection, users_collection
 from .like import get_all_likes_on_post
 from .comment import get_all_comments_on_post
+from .steganography.hash import hash_sha_info
+from .upload import upload_image_path
+from .verify import encode_image
 
 # helpers
 
@@ -25,7 +30,9 @@ def post_helper(post, user, likes=None, comments=None) -> dict:
     }
 
 
-async def initialize_post(user_id: ObjectId, post: dict):
+async def initialize_post(user_id: ObjectId, post: dict, image_url: str, user_sha: str):
+    post["image"] = image_url
+    post["user_sha"] = user_sha
     post["user_id"] = user_id
     return post
 
@@ -33,7 +40,19 @@ async def initialize_post(user_id: ObjectId, post: dict):
 # Add a new post into to the database
 async def add_post(email: str, post_data: dict) -> dict:
     user = await users_collection.find_one({"email": email})
-    post_data = await initialize_post(user["_id"], post_data)
+    user_sha, info = hash_sha_info(str(user["_id"]))
+
+    encoded_image = await encode_image(post_data["image"], info)
+
+    # upload the image
+    with tempfile.NamedTemporaryFile(suffix=".png") as tmp:
+        cv2.imwrite(tmp.name, encoded_image)
+        image_url = upload_image_path(tmp.name)
+
+    # delete file
+    del post_data["image"]
+
+    post_data = await initialize_post(user["_id"], post_data, image_url, user_sha)
     post = await posts_collection.insert_one(post_data)
     new_post = await posts_collection.find_one({"_id": post.inserted_id})
     return post_helper(new_post, user)
