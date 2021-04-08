@@ -30,7 +30,9 @@ export default function CreateComment({ handleCreateComment, post }) {
         toast.success(JSON.stringify(res.data.message));
         handleCreateComment(res.data.data);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        toast.error(JSON.stringify(err));
+      });
   };
   return (
     <div>

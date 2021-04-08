@@ -19,3 +19,8 @@ export const POST_COMMENT_URL = `${BASE_URL}/post/comment`;
 export const POST_UNCOMMENT_URL = `${BASE_URL}/post/uncomment`;
 export const USER_SUGGESTIONS = `${BASE_URL}/suggestions`;
 export const GET_USER_DETAILS = `${BASE_URL}/user/details?user_id=`
+export const POST_LIKE_UNLIKE_URL = `${BASE_URL}/post/like_unlike`;
+export const POST_REPORT_URL = `${BASE_URL}/post/report`;
+
+// Cooldown before post can be reported again
+export const POST_REPORT_COOLDOWN = 20000;

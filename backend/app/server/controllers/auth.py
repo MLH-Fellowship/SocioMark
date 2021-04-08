@@ -3,9 +3,7 @@ from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, HTTPAuthorizationCredentials, HTTPBearer
 from fastapi import HTTPException, Security
-from dotenv import dotenv_values, find_dotenv
-
-config = dotenv_values(find_dotenv())
+from ..config import config
 
 
 class AuthHandler():

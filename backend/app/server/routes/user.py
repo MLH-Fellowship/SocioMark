@@ -3,7 +3,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import UploadFile, File, Form
 from pydantic import EmailStr
-from dotenv import dotenv_values, find_dotenv
+from ..config import config
 
 from ..controllers.user import (
     add_user,
@@ -24,7 +24,6 @@ from ..models.user import (
 )
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
-config = dotenv_values(find_dotenv())
 
 
 @router.post("/register", response_description="User data added into the database", status_code=status.HTTP_201_CREATED)
