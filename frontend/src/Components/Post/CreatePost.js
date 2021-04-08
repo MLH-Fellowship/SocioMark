@@ -58,7 +58,7 @@ export default function CreatePost({ handleCreatePost }) {
         <Loading />
       ) : (
         <div>
-          <div className="max-w-3xl w-full mx-auto relative bg-white shadow rounded-lg">
+          <div className="relative bg-white shadow rounded-lg">
             <form
               onSubmit={handleSubmit}
               className="flex w-full flex-col p-4 md:p-6"

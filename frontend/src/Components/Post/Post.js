@@ -44,7 +44,7 @@ export default function Post({ post_initializer }) {
 
   return (
     <div>
-      <div className="max-w-3xl mx-auto justify-center">
+      <div className="justify-center">
         <div className="bg-white shadow border mt-4 ">
           <div className="flex justify-between w-full items-center px-4">
             <div className="flex">
