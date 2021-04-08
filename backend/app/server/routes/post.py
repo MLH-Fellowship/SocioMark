@@ -11,7 +11,6 @@ from ..controllers.post import (
     update_post,
     report_post
 )
-from ..controllers.upload import upload_image
 from ..models.post import (
     ResponseModel,
     UpdatePostModel,
@@ -22,10 +21,9 @@ router = APIRouter()
 
 @router.post("/create", response_description="Post added into the database", status_code=status.HTTP_201_CREATED)
 async def add_post_data(image: UploadFile = File(...), description: str = Form(None), current_user=Depends(auth_handler.auth_wrapper)):
-    image_url = upload_image(image)
     post = {
         "report_counter": 0,
-        "image": image_url,
+        "image": image,
         "description": description
     }
     new_post = await add_post(current_user, post)
