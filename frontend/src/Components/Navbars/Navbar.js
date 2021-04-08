@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { A, navigate } from "hookrouter";
+import { USER_SUGGESTIONS } from "../../constants";
+import axios from "axios";
 
 export default function Navbar({ links, logout }) {
   const [shown, setShown] = useState(false);
@@ -99,6 +101,29 @@ export default function Navbar({ links, logout }) {
     }
   };
 
+  const [searchKey, setSearchKey] = useState("");
+  const [users, setUsers] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    axios.get(USER_SUGGESTIONS).then((res) => {
+      setUsers(res.data.data);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if(searchKey!== ""){
+      let result = users.filter((user) =>
+      user.name.toLowerCase().includes(searchKey.toLowerCase())
+    );
+    setSearchResults(result);
+    }
+    else{
+      setSearchResults([])
+    }
+  }, [searchKey]);
+  
   return (
     <nav className=" flex items-center justify-around flex-wrap bg-white border-b-1 shadow border-black">
       <div>
@@ -108,14 +133,24 @@ export default function Navbar({ links, logout }) {
           </span>
         </div>
       </div>
+
       <div>
         <input
           aria-label="search"
           name="search"
           type="text"
-          className="appearance-none border text-center rounded sm:py-2 sm:px-3 py-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          onChange={(e) => {
+            setSearchKey(e.target.value);
+          }}
+          value={searchKey}
+          className="appearance-none border focus:border-black text-center rounded sm:py-2 sm:px-3 py-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           placeholder="Search Users"
         />
+        <div className="bg-blue-100">
+          {searchResults?.map((result) => {
+            return <div>{result.name}</div>;
+          })}
+        </div>
       </div>
 
       <div className="block lg:hidden py-6 sm:pr-6">
