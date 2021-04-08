@@ -94,6 +94,8 @@ export default function Navbar({ links, logout }) {
             ></path>
           </svg>
         );
+      default:
+        break;
     }
   };
 

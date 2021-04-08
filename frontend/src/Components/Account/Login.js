@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { navigate, A } from "hookrouter";
+import { navigate } from "hookrouter";
 import axios from "axios";
 import { Loading } from "../Common/Loader";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { LOGIN_URL } from "../../constants";
 
 export default function Login() {
   const initForm = {
@@ -22,7 +23,7 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:8000/user/login", { ...form })
+      .post(LOGIN_URL, { ...form })
       .then((resp) => {
         toast.success(JSON.stringify(resp.data.message));
         localStorage.setItem("access_token", resp.data.data.access_token);

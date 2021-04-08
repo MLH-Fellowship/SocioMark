@@ -18,7 +18,6 @@ def user_helper_lightweight(user, like_id: ObjectId = None) -> dict:
         "like_id": str(like_id),
         "user_id": str(user["_id"]),
         "name": user["name"],
-        "email": user["email"],
         "profile_picture": user["profile_picture"]
     }
 
@@ -31,9 +30,8 @@ async def retrieve_user_lightweight(like_id: ObjectId, user_id: ObjectId):
 
 def like_helper(like) -> dict:
     return {
-        "post_id": str(like["post_id"]),
-        "user_id": str(like["user_id"]),
-        "is_liked": like["is_liked"]
+        "like_id": str(like["_id"]),
+        "to_delete": not like["is_liked"]
     }
 
 
@@ -60,11 +58,12 @@ async def like_unlike_post(email: str, like_details: dict):
         # First Time: create entry
         like_details = await initialize_like(user["_id"], ObjectId(like_details["post_id"]), like_details)
         new_like = await likes_collection.insert_one(like_details)
-        return_like = await likes_collection.find_one({"_id": new_like.inserted_id})
+        return user_helper_lightweight(user, new_like.inserted_id)
     else:
         # Next Time: update the is_liked label
         await likes_collection.update_one(
             {"user_id": entry_exists["user_id"]}, {"$set": {"is_liked": not entry_exists["is_liked"]}}
         )
-        return_like = await likes_collection.find_one({"post_id": ObjectId(like_details["post_id"]), "user_id": user["_id"]})
-    return like_helper(return_like)
+        if not entry_exists["is_liked"]:
+            return user_helper_lightweight(user, entry_exists["_id"])
+        return like_helper(entry_exists)
