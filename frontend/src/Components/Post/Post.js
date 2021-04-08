@@ -85,8 +85,7 @@ export default function Post({ post_initializer }) {
               className="relative w-full object-contain h-std  shadow-lg"
             />
           </div>
-          <div className="px-2 py-1 text-md font-normal mt-1">
-            <span className="font-semibold">@{post.author_name}: </span>
+          <div className="px-2 text-sm  font-bold mt-1">
             {post.description}
           </div>
           {post.comments.map((comment) => {

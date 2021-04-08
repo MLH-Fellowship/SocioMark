@@ -69,8 +69,8 @@ export default function CreatePost({ handleCreatePost }) {
                 name="description"
                 value={description}
                 type="description"
-                className="appearance-none block w-full bg-white text-red-900 font-normal border border-primary-400 rounded py-3 px-4 mb-4 leading-tight focus:outline-none focus:bg-white focus:border-primary-500"
-                placeholder="Description..."
+                className="appearance-none block w-full bg-white text-blue-900 font-normal border border-blue-400 rounded py-3 px-4 mb-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                placeholder="Add a description for your post..."
               />
               <div className="md:flex justify-between items-center">
                 <div className="md:w-2/3">
@@ -81,13 +81,13 @@ export default function CreatePost({ handleCreatePost }) {
                       onChange={handleFileUpload}
                       type="file"
                       accept="image/*"
-                      className="appearance-none w-full border rounded py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                      className="appearance-none w-full border rounded py-2 px-3 text-blue-700 bg-blue-50 leading-tight focus:outline-none focus:shadow-outline"
                     />{" "}
                   </span>
                 </div>
-                <div className="w-1/4 mt-2 md:mt-0">
-                  <button className="bg-green-600 w-full hover:bg-green-500 text-center text-xl font-semibold text-white rounded-md p-2 mt-2 md:mt-0">
-                    Submit
+                <div className="sm:w-1/4 w-1/3 mt-2 md:mt-0">
+                  <button className="bg-blue-900 w-full hover:bg-blue-700 text-center text-xl font-semibold text-white rounded-md p-2 mt-2 md:mt-0">
+                    Post
                   </button>
                 </div>
               </div>
