@@ -10,6 +10,7 @@ export default function Suggestions({ user }) {
             <img
               className="rounded-full h-8 w-8 shadow"
               src={user.profile_picture}
+              alt="Profile_Picture"
             />
           </A>
           <A href={`/user/${user.user_id}`}>

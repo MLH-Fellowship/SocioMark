@@ -139,7 +139,7 @@ export default function Post({ post_initializer }) {
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
                     fill="red"
-                    class="bi bi-heart-fill"
+                    className="bi bi-heart-fill"
                     viewBox="0 0 16 16"
                   >
                     <path
@@ -196,12 +196,11 @@ export default function Post({ post_initializer }) {
               className="relative w-full object-contain h-std  shadow-lg"
             />
           </div>
-          <div className="px-2 text-sm  font-bold mt-1">
-            {post.description}
-          </div>
+          <div className="px-2 text-sm  font-bold mt-1">{post.description}</div>
           {post.comments.map((comment) => {
             return (
               <Comment
+                key={comment.comment_id}
                 handleDeleteComment={handleDeleteComment}
                 comment={comment}
               />

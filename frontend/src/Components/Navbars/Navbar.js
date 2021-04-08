@@ -121,6 +121,7 @@ export default function Navbar({ links, logout }) {
     } else {
       setSearchResults([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchKey]);
 
   return (
@@ -162,6 +163,7 @@ export default function Navbar({ links, logout }) {
             {searchResults?.map((result) => {
               return (
                 <button
+                  key={result.user_id}
                   className="w-full"
                   onClick={() => {
                     navigate(`/user/${result.user_id}`);
