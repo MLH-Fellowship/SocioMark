@@ -113,17 +113,16 @@ export default function Navbar({ links, logout }) {
   }, []);
 
   useEffect(() => {
-    if(searchKey!== ""){
+    if (searchKey !== "") {
       let result = users.filter((user) =>
-      user.name.toLowerCase().includes(searchKey.toLowerCase())
-    );
-    setSearchResults(result);
-    }
-    else{
-      setSearchResults([])
+        user.name.toLowerCase().includes(searchKey.toLowerCase())
+      );
+      setSearchResults(result);
+    } else {
+      setSearchResults([]);
     }
   }, [searchKey]);
-  
+
   return (
     <nav className=" flex items-center justify-around flex-wrap bg-white border-b-1 shadow border-black">
       <div>
@@ -134,23 +133,49 @@ export default function Navbar({ links, logout }) {
         </div>
       </div>
 
-      <div>
-        <input
-          aria-label="search"
-          name="search"
-          type="text"
-          onChange={(e) => {
-            setSearchKey(e.target.value);
-          }}
-          value={searchKey}
-          className="appearance-none border focus:border-black text-center rounded sm:py-2 sm:px-3 py-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Search Users"
-        />
-        <div className="bg-blue-100">
-          {searchResults?.map((result) => {
-            return <div>{result.name}</div>;
-          })}
+      <div className="relative">
+        <div className="flex items-center border focus:border-black">
+          <input
+            aria-label="search"
+            name="search"
+            type="text"
+            onChange={(e) => {
+              setSearchKey(e.target.value);
+            }}
+            value={searchKey}
+            className="appearance-none w-full text-xs text-center rounded sm:py-2 sm:px-3 py-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Search Users"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="mx-2 text-gray-500"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg>
         </div>
+        {searchResults.length > 0 && (
+          <div className="w-full absolute border border-gray-400 bg-white mt-1 rounded-lg shadow-lg py-2 z-50">
+            {searchResults?.map((result) => {
+              return (
+                <button
+                  className="w-full"
+                  onClick={() => {
+                    navigate(`/user/${result.user_id}`);
+                    window.location.reload();
+                  }}
+                >
+                  <div className="text-gray-700 hover:bg-blue-50 hover:text-blue-800 mx-4 text-xs border-b p-1 mb-1">
+                    {result.name}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <div className="block lg:hidden py-6 sm:pr-6">
