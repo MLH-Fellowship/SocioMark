@@ -19,7 +19,6 @@ export default function Post({ post_initializer }) {
   };
 
   const handleLike = (post_id) => {
-    console.log(post_id);
     axios
       .post(
         POST_LIKE_UNLIKE_URL,
@@ -35,16 +34,13 @@ export default function Post({ post_initializer }) {
         toast.info(JSON.stringify(res.data.message));
         let new_post = Object.assign({}, post);
         if (res.data.data.to_delete === false) {
-          console.log("Deleting", res.data.data);
           var filtered_likes = new_post.likes.filter(function (el) {
             return el.like_id !== res.data.data.like_id;
           });
           new_post.likes = filtered_likes;
         } else {
-          console.log("Adding", res.data.data);
           new_post.likes.push(res.data.data);
         }
-        console.log(new_post.likes);
         setPost(new_post);
       })
       .catch(({ response }) => {
