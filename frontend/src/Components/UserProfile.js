@@ -1,19 +1,37 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import React, { useState,useEffect } from "react";
+import axios from "axios"
+import { GET_USER_DETAILS } from "../constants";
+import { Loading } from "../Components/Common/Loader";
+
 
 export default function UserProfile({ id }) {
-  const { user, token } = useContext(AuthContext);
-  console.log(user[0].user_id);
-  console.log(id === user[0].user_id);
+  const [user, setUser] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(GET_USER_DETAILS+`${id}`)
+      .then((res) => {
+        setUser(res.data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+          console.log("User Not found"); //catch error in backend and update here
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  console.log(user);
+
   return (
     <div>
-      {id === user[0].user_id ? (
+     {loading?<Loading/>: <div> 
         <div className="text-2xl font-bold">
-          Hey {user[0].name} {token[0]}
+          Hey {user.name}
         </div>
-      ) : (
-        <div>no user</div>
-      )}
+      </div>}
     </div>
   );
 }

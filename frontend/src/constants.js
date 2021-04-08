@@ -18,3 +18,4 @@ export const POST_GET_ALL_URL = `${BASE_URL}/post/all`;
 export const POST_COMMENT_URL = `${BASE_URL}/post/comment`;
 export const POST_UNCOMMENT_URL = `${BASE_URL}/post/uncomment`;
 export const USER_SUGGESTIONS = `${BASE_URL}/suggestions`;
+export const GET_USER_DETAILS = `${BASE_URL}/user/details?user_id=`
