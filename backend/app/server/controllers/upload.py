@@ -2,9 +2,8 @@ from fastapi import File, UploadFile
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from dotenv import dotenv_values, find_dotenv
+from ..config import config
 
-config = dotenv_values(find_dotenv())
 
 cloudinary.config(
     cloud_name=config["CLOUD_NAME"],
