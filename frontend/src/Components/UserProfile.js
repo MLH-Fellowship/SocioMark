@@ -4,7 +4,7 @@ import { navigate } from "hookrouter";
 export default function UserProfile() {
   return (
     <div className="flex flex-col sm:flex-row mx-auto bg-white h-auto text-xl justify-center">
-        <div className="flex md:flex-col flex-wrap w-full sm:w-1/2 items-center pt-24 ">
+        <div className="flex md:flex-col flex-wrap w-full sm:w-1/2 items-center pt-20 ">
           <div className="flex flex-col md:w-1/2 items-center mx-auto">
             <div className=" items-center">
               <img
@@ -44,7 +44,7 @@ export default function UserProfile() {
           </div>
         </div>
 
-      <div className="flex flex-col sm:2/3 w-full pt-24 items-start">
+      <div className="flex flex-col sm:2/3 w-full pt-20 items-start">
         <div className="flex-1 text-center px-4 py-2 m-2">
           <img
             className="sm:w-3/4 w-full"
