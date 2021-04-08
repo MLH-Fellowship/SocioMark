@@ -34,7 +34,7 @@ export default function Register() {
     const { password, confirm_password, email } = form;
 
     Object.keys(form).forEach((key) => {
-      if (key != "description" && form[key] === "") {
+      if (key !== "description" && form[key] === "") {
         formValid = false;
         err[key] = "This field is required";
       }

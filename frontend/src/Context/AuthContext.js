@@ -20,9 +20,12 @@ export const AuthProvider = (props) => {
           }
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <AuthContext.Provider value={user}>{props.children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user: [user], token: [access] }}>
+      {props.children}
+    </AuthContext.Provider>
   );
 };

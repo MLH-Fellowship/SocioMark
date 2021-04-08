@@ -18,13 +18,11 @@ class PostSchema(BaseModel):
 
 
 class UpdatePostModel(BaseModel):
-    image: Optional[str]
     description: Optional[str]
 
     class Config:
         schema_extra = {
             "example": {
-                "image": "url_of_image",
                 "description": "This is a post by <user_id>"
             }
         }

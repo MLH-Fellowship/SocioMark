@@ -3,6 +3,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import UploadFile, File, Form
 from pydantic import EmailStr
+from dotenv import dotenv_values, find_dotenv
 
 from ..controllers.user import (
     add_user,
@@ -23,12 +24,12 @@ from ..models.user import (
 )
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+config = dotenv_values(find_dotenv())
 
 
 @router.post("/register", response_description="User data added into the database", status_code=status.HTTP_201_CREATED)
 async def add_user_data(name: str = Form(...), email: EmailStr = Form(...), password: str = Form(...), confirm_password: str = Form(...), description: str = Form(None), image: UploadFile = File(None)):
-    # we can change "" to some default URL containing some generic avatar
-    image_url = upload_image(image) if image else ""
+    image_url = upload_image(image) if image else config["DEFAULT_AVATAR"]
     user = {
         "name": name,
         "email": email,
@@ -65,6 +66,7 @@ async def update_user_data(updated_user: UpdateUserModel = Body(...), current_us
 async def details_user_data(user_id: str):
     new_user = await retrieve_user(user_id)
     return ResponseModel(new_user, "Got user details successfully.")
+
 
 @router.get("/current_user", response_description="Get current_user details from the database")
 async def current_user_data(current_user=Depends(auth_handler.auth_wrapper)):
