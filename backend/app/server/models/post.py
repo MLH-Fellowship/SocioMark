@@ -6,6 +6,7 @@ class PostSchema(BaseModel):
     user_id: str = Field(None)
     report_counter: int = Field(0, ge=0)
     image: str = Field(...)
+    user_sha: str = Field(None)
     description: str = Field(None)
 
     class Config:
