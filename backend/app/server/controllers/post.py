@@ -1,8 +1,15 @@
+import cv2
+import numpy as np
+import tempfile
+from PIL import Image
 from bson.objectid import ObjectId
 from fastapi import HTTPException
 from ..database import posts_collection, users_collection
 from .like import get_all_likes_on_post
 from .comment import get_all_comments_on_post
+from .steganography.hash import hash_sha_info
+from .upload import upload_image_path, upload_image
+from .verify import encode_image, decode_image
 
 # helpers
 
@@ -25,7 +32,9 @@ def post_helper(post, user, likes=None, comments=None) -> dict:
     }
 
 
-async def initialize_post(user_id: ObjectId, post: dict):
+async def initialize_post(user_id: ObjectId, post: dict, image_url: str, user_sha: str):
+    post["image"] = image_url
+    post["user_sha"] = user_sha
     post["user_id"] = user_id
     return post
 
@@ -33,7 +42,33 @@ async def initialize_post(user_id: ObjectId, post: dict):
 # Add a new post into to the database
 async def add_post(email: str, post_data: dict) -> dict:
     user = await users_collection.find_one({"email": email})
-    post_data = await initialize_post(user["_id"], post_data)
+    upload_file = post_data["image"]
+
+    image_url = upload_image(upload_file)
+
+    pil_image = Image.open(upload_file.file)
+    rgb_image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
+
+    embedded_sha = await decode_image(rgb_image)
+
+    sha_already_exists = await posts_collection.find_one({"user_sha": embedded_sha})
+
+    if not sha_already_exists:
+        user_sha, info = hash_sha_info(str(user["_id"]))
+        encoded_image = await encode_image(rgb_image, info)
+
+        # upload the image
+        with tempfile.NamedTemporaryFile(suffix=".png") as tmp:
+            cv2.imwrite(tmp.name, encoded_image)
+            image_url = upload_image_path(tmp.name)
+
+    else:
+        user_sha = sha_already_exists["user_sha"]
+
+    # delete file
+    del post_data["image"]
+
+    post_data = await initialize_post(user["_id"], post_data, image_url, user_sha)
     post = await posts_collection.insert_one(post_data)
     new_post = await posts_collection.find_one({"_id": post.inserted_id})
     return post_helper(new_post, user)
