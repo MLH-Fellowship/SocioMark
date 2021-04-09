@@ -1,7 +1,6 @@
 import { useRoutes, useRedirect, navigate } from "hookrouter";
 import React from "react";
 import Home from "../Components/Common/Home";
-import Login from "../Components/Account/Login";
 import Register from "../Components/Account/Register";
 
 const routes = {
