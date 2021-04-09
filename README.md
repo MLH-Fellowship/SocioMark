@@ -8,9 +8,13 @@ A social-media platform that lets you upload images and secure them with a perso
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/Open-Sourced-Olaf/SocioMark?style=flat)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Open-Sourced-Olaf/SocioMark?color=green?style=flat)
 
+<img src="https://user-images.githubusercontent.com/64848982/114246636-b8e15100-99b0-11eb-8cad-177589b2dd18.png">
+
 ## 👨‍💻 What it does
 - SocioMark is essentially a social media platform that lets users create an account to upload and share images. Every image upload is added to the user's profile and can be shared with other users. 
-- After uploading the image, the user's unique hash created from their profile is encoded within the image. Users can `verify` an image's `copyright` and see if it matches with the user who uploaded the image. If the verification fails, users can flag an image to be taken down, protecting the original creator's copyright.
+- After uploading the image, the user's unique hash created from their profile is encoded within the image. Users can `verify` an image's `copyright` and see if it matches with the user who uploaded the image. If the verification fails, users can flag an image to take down, protecting the original creator's copyright.
+
+<img src="https://user-images.githubusercontent.com/64848982/114246722-f1812a80-99b0-11eb-8d79-705978fc712f.png">
 
 ## ⚛ Tech Stack
 - Frontend : ReactJS (JavaScript), Tailwind CSS
