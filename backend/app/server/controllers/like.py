@@ -31,7 +31,7 @@ async def retrieve_user_lightweight(like_id: ObjectId, user_id: ObjectId):
 def like_helper(like) -> dict:
     return {
         "like_id": str(like["_id"]),
-        "to_delete": not like["is_liked"]
+        "to_delete": like["is_liked"]
     }
 
 
@@ -62,7 +62,7 @@ async def like_unlike_post(email: str, like_details: dict):
     else:
         # Next Time: update the is_liked label
         await likes_collection.update_one(
-            {"user_id": entry_exists["user_id"]}, {"$set": {"is_liked": not entry_exists["is_liked"]}}
+            {"post_id": ObjectId(like_details["post_id"]), "user_id": entry_exists["user_id"]}, {"$set": {"is_liked": not entry_exists["is_liked"]}}
         )
         if not entry_exists["is_liked"]:
             return user_helper_lightweight(user, entry_exists["_id"])
