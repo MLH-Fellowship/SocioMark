@@ -99,7 +99,7 @@ export default function Register() {
         })
         .then((resp) => {
           toast.success(resp.data.message);
-          navigate("/login");
+          navigate("/home");
           setLoading(false);
         })
         .catch(({ response }) => {
@@ -116,11 +116,18 @@ export default function Register() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex items-center justify-center py-5 px-4 sm:px-6 lg:px-8">
+        <div className="bg-purple lg:bg-login-img flex items-center justify-center py-5 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full">
+            <div className="text-center text-5xl text-white">Welcome to</div>
+            <div className="text-center text-7xl mt-4 text-white">
+              SocioMark
+            </div>
+            <div className="text-center text-4xl mt-4 text-black">
+              Login to Continue
+            </div>
             <form
               onSubmit={handleSubmit}
-              className="bg-white shadow rounded px-8 pt-6 pb-8 my-5 lg:my-20"
+              className="bg-white shadow rounded px-8 pt-6 pb-8 my-4 lg:my-20"
             >
               <div className="mb-4">
                 <label
@@ -135,7 +142,7 @@ export default function Register() {
                   onChange={handleFileUpload}
                   type="file"
                   accept="image/*"
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="mb-4">
@@ -151,7 +158,7 @@ export default function Register() {
                   value={form.name}
                   type="name"
                   onChange={handleChange}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Name..."
                 />
                 <div className="text-xs italic text-red-500">{error.name}</div>
@@ -169,7 +176,7 @@ export default function Register() {
                   value={form.email}
                   type="email"
                   onChange={handleChange}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Enter your email"
                 />
                 <div className="text-xs italic text-red-500">{error.email}</div>
@@ -187,7 +194,7 @@ export default function Register() {
                   type="password"
                   value={form.password}
                   onChange={handleChange}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="******"
                 />
                 <div className="text-xs italic text-red-500">
@@ -207,7 +214,7 @@ export default function Register() {
                   type="password"
                   value={form.confirm_password}
                   onChange={handleChange}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="******"
                 />
                 <div className="text-xs italic text-red-500">
@@ -228,7 +235,7 @@ export default function Register() {
                   value={form.description}
                   type="description"
                   onChange={handleChange}
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Describe Yourself..."
                 />
                 <div className="text-xs italic text-red-500">
@@ -239,10 +246,10 @@ export default function Register() {
               <div className="flex items-center justify-between mt-4">
                 <button
                   type="submit"
-                  className="flex items-center bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 sm:px-3 rounded focus:outline-none focus:shadow-outline"
+                  className="flex items-center bg-purple hover:bg-blue-900 text-white font-bold py-2 px-4 sm:px-3 rounded focus:outline-none focus:shadow-outline"
                 >
                   <svg
-                    className="h-5 w-5 text-green-600 transition ease-in-out duration-150 mr-1"
+                    className="h-5 w-5 text-white transition ease-in-out duration-150 mr-1"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
