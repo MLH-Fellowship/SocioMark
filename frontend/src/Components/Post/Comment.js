@@ -8,7 +8,10 @@ export default function Comment({ handleDeleteComment, comment }) {
   return (
     <div className="text-md flex justify-between font-normal mt-1 px-2 py-1 border-t border-gray-200">
       <div>
-        <span className="font-semibold">{comment.name}: </span>
+        <A href={`/user/${comment.user_id}`}>
+          <span className="font-semibold">{comment.name}: </span>
+        </A>
+
         <span>{comment.payload}</span>
       </div>
       {user[0].user_id === comment.user_id && (

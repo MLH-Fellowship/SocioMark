@@ -157,16 +157,18 @@ export default function Post({ post_initializer }) {
       <div className="justify-center">
         <div className="bg-white shadow border mt-4 ">
           <div className="flex justify-between w-full items-center px-4">
-            <div className="flex">
-              <img
-                alt="author_image"
-                src={post.author_image}
-                className="rounded-full my-2 h-10 w-10 shadow"
-              />
-              <h3 className="text-xl  font-bold px-2 py-4">
-                {post.author_name}
-              </h3>
-            </div>
+            <A href={`/user/${post.user_id}`}>
+              <div className="flex">
+                <img
+                  alt="author_image"
+                  src={post.author_image}
+                  className="rounded-full my-2 h-10 w-10 shadow"
+                />
+                <h3 className="text-xl  font-bold px-2 py-4">
+                  {post.author_name}
+                </h3>
+              </div>
+            </A>
             <div className="flex items-center gap-x-4">
               <div className="flex gap-x-2 items-center ">
                 <A
