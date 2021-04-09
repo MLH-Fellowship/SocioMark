@@ -128,12 +128,17 @@ export default function Navbar({ links, logout }) {
     <nav className=" flex items-center justify-around flex-wrap bg-white border-b-1 shadow border-black">
       <div>
         <div className="flex items-center flex-shrink-0 text-white sm:mr-6 py-6 sm:pl-6">
-          <span className="font-semibold text-black text-xl sm:text-4xl ml-1 tracking-tight">
-            SocioMark
-          </span>
+          <A href="/home">
+            <img
+              className="object-scale-down sm:w-48 w-32"
+              src={
+                "https://user-images.githubusercontent.com/34866653/114220820-1a41f980-998a-11eb-91f5-9b14abde98d7.png"
+              }
+              alt="SocioMark"
+            />
+          </A>
         </div>
       </div>
-
       <div className="relative">
         <div className="flex items-center border focus:border-black">
           <input
