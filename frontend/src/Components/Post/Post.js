@@ -5,11 +5,15 @@ import axios from "axios";
 import { A } from "hookrouter";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
+import Modal from "./Verification";
+import "../../Styles/verification.css";
+
 import {
   POST_UNCOMMENT_URL,
   POST_LIKE_UNLIKE_URL,
   POST_REPORT_URL,
   POST_REPORT_COOLDOWN,
+  POST_VERIFY_URL,
 } from "../../constants";
 
 export default function Post({ post_initializer }) {
@@ -17,6 +21,8 @@ export default function Post({ post_initializer }) {
   const [access] = token;
   const [post, setPost] = useState(post_initializer);
   const [fade, setFade] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState("");
 
   const handleCreateComment = (new_comment) => {
     let new_post = Object.assign({}, post);
@@ -111,6 +117,41 @@ export default function Post({ post_initializer }) {
       });
   };
 
+  function handleVerify(post_id) {
+    axios
+      .post(
+        POST_VERIFY_URL,
+        { post_id },
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: "Bearer " + access,
+          },
+        }
+      )
+      .then((res) => {
+        let details = res.data.data;
+        if (details.is_authentic === true) {
+          toast.success(JSON.stringify(res.data.message));
+        } else {
+          toast.warn(JSON.stringify(res.data.message));
+          setModalText(
+            "Original Author: " +
+              details.author_name +
+              " (" +
+              details.author_email +
+              ")"
+          );
+          setShowModal(true);
+        }
+      })
+      .catch(({ response }) => {
+        if (response) {
+          toast.error(JSON.stringify(response.data.detail));
+        }
+      });
+  }
+
   return (
     <div>
       <div className="justify-center">
@@ -196,12 +237,33 @@ export default function Post({ post_initializer }) {
               )}
             </div>
           </div>
-          <div className="mx-auto">
+          <div className="mx-auto container">
             <img
               alt="post_image"
               src={post.image}
-              className="relative w-full object-contain h-std  shadow-lg"
+              className="relative w-full object-contain h-std  shadow-lg post"
             />
+            <div className="middle">
+              {showModal ? (
+                <Modal
+                  onClose={() => {
+                    setShowModal(!showModal);
+                  }}
+                  show={showModal}
+                >
+                  {modalText}
+                </Modal>
+              ) : (
+                <button
+                  className="button"
+                  onClick={() => {
+                    handleVerify(post.post_id);
+                  }}
+                >
+                  <span>Verify!</span>
+                </button>
+              )}
+            </div>
           </div>
           <div className="px-2 text-sm  font-bold mt-1">{post.description}</div>
           {post.comments.map((comment) => {
