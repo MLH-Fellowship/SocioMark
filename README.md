@@ -1,44 +1,49 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/34866653/114220820-1a41f980-998a-11eb-91f5-9b14abde98d7.png"></p>
 
-## SocioMark
-SocioMark is an all-new social media platform that prioritizes image ownership and security using Machine Learning. By watermarking each image upon upload, the hash of the user is permanently encoded within the image and essentially lets photographers copyright their images. 
+# SocioMark
+A social-media platform that lets you upload images and secure them with a personalized encryption. Your assets will always be yours, regardless of who posts it!
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e16b536d-64db-41c7-86dd-c29f1c48bc98/deploy-status)](https://app.netlify.com/sites/sociomark/deploys)
 ![Heroku](http://heroku-badge.herokuapp.com/?app=sociomark-backend&style=flat&svg=1)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/Open-Sourced-Olaf/SocioMark?style=flat)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Open-Sourced-Olaf/SocioMark?color=green?style=flat)
 
+<img src="https://user-images.githubusercontent.com/64848982/114246636-b8e15100-99b0-11eb-8cad-177589b2dd18.png">
+
 ## 👨‍💻 What it does
 - SocioMark is essentially a social media platform that lets users create an account to upload and share images. Every image upload is added to the user's profile and can be shared with other users. 
-- After uploading the image, the user's unique hash created from their profile is encoded within the image. Users can `verify` an image's `copyright` and see if it matches with the user who uploaded the image. If the verification fails, users can flag an image to be taken down, protecting the original creator's copyright.
+- After uploading the image, the user's unique hash created from their profile is encoded within the image. Users can `verify` an image's `copyright` and see if it matches with the user who uploaded the image. If the verification fails, users can flag an image to take down, protecting the original creator's copyright.
+
+<img src="https://user-images.githubusercontent.com/64848982/114246722-f1812a80-99b0-11eb-8d79-705978fc712f.png">
 
 ## ⚛ Tech Stack
-- Frontend : Reactjs
-- Backend : FastAPI,Python
+- Frontend : ReactJS (JavaScript), Tailwind CSS
+- Backend : FastAPI (Python3)
 - Database : MongoDB
+- Image Processing : OpenCV (Python3)
 
 ## 💻 Run the project locally
 - Clone the repo ```https://github.com/MLH-Fellowship/SocioMark.git```
-- Navigate to the ```SocioMark/backend```
-- Run command to install all the dependencies  ```pip install -r requirements.txt``` 
-- Navigate to ```http://localhost:8000/docs``` to view the swagger api end points
-- Navigate to the ```SocioMark/frontend```
-- Run command to install all the dependencies  ```npm install``` 
+- Navigate to ```SocioMark/backend```
+- Run command to install all the Python (Server) dependencies ```pip install -r requirements.txt``` 
+- Navigate to ```http://localhost:8000/docs``` to view the Swagger API end-points
+- Navigate to ```SocioMark/frontend```
+- Run command to install all the JavaScript (Client) dependencies ```npm install``` 
 - Run command ```npm start```
 - Navigate to ```http://localhost:3000/```
 
 ## 🚩 How to Contribute
-- Fork and clone the repository git clone https://github.com/Open-Sourced-Olaf/SocioMark
-- Create a branch git checkout -b "branch_name"
+- Fork and clone the repository ```git clone https://github.com/MLH-Fellowship/SocioMark.git```
+- Create a branch ```git checkout -b "branch_name"```
 - Make changes in that branch
-- Add and commit your changes with git add and git commit -m "your commit message"
-- Then push the changes into your branch git push origin branch_name
+- Add and commit your changes with ```git add <changes>``` and ```git commit -m "your commit message"```
+- Then push the changes into your branch ```git push origin branch_name```
 - Now you can create a PR using that branch in our repository.
-- 🎉 you have successfully contributed to this project.
+- 🎉 You have successfully contributed to this project.
 
 ## 🤓 Future Improvements
 - Follower functionality that improves interaction between users and lets users customize their feed pages
-- Increase complexity of encoding user hash into image
+- Implement pagination for feed
 - Sharing functionality to share images outside of platform
 
 ## 🤔 Challenges
