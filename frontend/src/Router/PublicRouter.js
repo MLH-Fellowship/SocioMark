@@ -6,7 +6,6 @@ import Register from "../Components/Account/Register";
 
 const routes = {
   "/home": () => <Home />,
-  "/login": () => <Login />,
   "/register": () => <Register />,
 };
 
