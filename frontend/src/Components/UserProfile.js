@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { GET_USER_DETAILS } from "../constants";
+import { GET_USER_DETAILS_URL } from "../constants";
 import { Loading } from "../Components/Common/Loader";
 import Post from "./Post/Post";
+import { toast } from "react-toastify";
 
 export default function UserProfile({ id }) {
   const [user, setUser] = useState([]);
@@ -11,14 +12,14 @@ export default function UserProfile({ id }) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(GET_USER_DETAILS + `${id}`)
+      .get(GET_USER_DETAILS_URL + `${id}`)
       .then((res) => {
         setLoading(false);
         setUser(res.data.data);
       })
       .catch((err) => {
         setLoading(false);
-        console.log("User Not found"); //catch error in backend and update here
+        toast.error("No user found with the ID"); //catch error in backend and update here
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { A, navigate } from "hookrouter";
-import { USER_SUGGESTIONS } from "../../constants";
+import { USER_SUGGESTIONS_URL } from "../../constants";
 import axios from "axios";
 
 export default function Navbar({ links, logout }) {
@@ -106,7 +106,7 @@ export default function Navbar({ links, logout }) {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    axios.get(USER_SUGGESTIONS).then((res) => {
+    axios.get(USER_SUGGESTIONS_URL).then((res) => {
       setUsers(res.data.data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -4,7 +4,7 @@ import Post from "./Post/Post";
 import CreatePost from "./Post/CreatePost";
 import { AuthContext } from "../Context/AuthContext";
 import { Loading } from "../Components/Common/Loader";
-import { POST_GET_ALL_URL, USER_SUGGESTIONS } from "../constants";
+import { POST_GET_ALL_URL, USER_SUGGESTIONS_URL } from "../constants";
 import Suggestions from "./Suggestions";
 
 export default function UserFeed() {
@@ -32,7 +32,7 @@ export default function UserFeed() {
 
   useEffect(() => {
     setSuggestionLoading(true);
-    axios.get(USER_SUGGESTIONS).then((res) => {
+    axios.get(USER_SUGGESTIONS_URL).then((res) => {
       setSuggestedUsers(res.data.data);
       setSuggestionLoading(false);
     });
