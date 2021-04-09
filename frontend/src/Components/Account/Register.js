@@ -99,7 +99,8 @@ export default function Register({ onToggle }) {
         })
         .then((resp) => {
           toast.success(resp.data.message);
-          navigate("/login");
+          navigate("/home");
+          onToggle();
           setLoading(false);
         })
         .catch(({ response }) => {
