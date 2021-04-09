@@ -6,7 +6,7 @@ import UserProfile from "../Components/UserProfile";
 
 const routes = {
   "/home": () => <UserFeed />,
-  "/profile": () => <UserProfile />,
+  "/user/:id": ({ id }) => <UserProfile id={id} />,
 };
 
 const PrivateRouter = () => {
@@ -14,7 +14,7 @@ const PrivateRouter = () => {
   const pages = useRoutes(routes);
   !pages && navigate("/");
   return (
-    <div className="relative bg-gray-200 min-h-screen pb-24">
+    <div className="relative bg-gray-200 min-h-screen">
       <UserNavbar />
       {pages}
       {!pages && (
