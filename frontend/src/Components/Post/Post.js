@@ -45,7 +45,7 @@ export default function Post({ post_initializer }) {
       .then((res) => {
         toast.info(JSON.stringify(res.data.message));
         let new_post = Object.assign({}, post);
-        if (res.data.data.to_delete === false) {
+        if (res.data.data.to_delete === true) {
           var filtered_likes = new_post.likes.filter(function (el) {
             return el.like_id !== res.data.data.like_id;
           });
