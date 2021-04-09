@@ -1,11 +1,9 @@
 import { useRoutes, useRedirect, navigate } from "hookrouter";
 import React from "react";
 import Home from "../Components/Common/Home";
-import PublicNavbar from "../Components/Navbars/PublicNavbar";
 import Login from "../Components/Account/Login";
 import Register from "../Components/Account/Register";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { injectStyle } from "react-toastify/dist/inject-style";
 
 const routes = {
   "/home": () => <Home />,
@@ -14,8 +12,6 @@ const routes = {
 };
 
 const PublicRouter = () => {
-  injectStyle();
-
   useRedirect("/", "/home");
   const pages = useRoutes(routes);
   !pages && navigate("/");

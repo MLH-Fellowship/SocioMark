@@ -1,7 +1,5 @@
 import motor.motor_asyncio
-from dotenv import dotenv_values, find_dotenv
-
-config = dotenv_values(find_dotenv())
+from .config import config
 
 MONGO_DETAILS = config["MONGODB_URL"]
 

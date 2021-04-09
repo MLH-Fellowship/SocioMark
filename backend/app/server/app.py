@@ -5,6 +5,7 @@ from .routes.post import router as PostRouter
 from .routes.suggestions import router as SuggestionsRouter
 from .routes.like import router as LikeRouter
 from .routes.comment import router as CommentRouter
+from .routes.verify import router as VerificationRouter
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -28,6 +29,7 @@ PostRouter.include_router(CommentRouter, prefix="")
 app.include_router(UserRouter, tags=["User"], prefix="/user")
 app.include_router(PostRouter, tags=["Post"], prefix="/post")
 app.include_router(SuggestionsRouter, tags=["Suggestions"], prefix="/suggestions")
+app.include_router(VerificationRouter, tags=["Verification"], prefix="/verify")
 
 
 @app.get("/", tags=["Root"])

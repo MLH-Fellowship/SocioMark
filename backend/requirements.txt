@@ -9,3 +9,7 @@ python-dotenv==0.15.0
 python-multipart==0.0.5
 cloudinary==1.25.0
 flake8==3.8.4
+numpy==1.20.2
+opencv-python==4.5.1
+Pillow==8.2.0
+requests==2.25.1
