@@ -173,6 +173,7 @@ export default function Post({ handleDeletePost, post_initializer }) {
               <div className="flex gap-x-2 items-center ">
                 <A
                   href="#"
+                  title="Like"
                   onClick={() => {
                     handleLike(post.post_id);
                   }}
@@ -222,6 +223,7 @@ export default function Post({ handleDeletePost, post_initializer }) {
               ) : (
                 <A
                   href="#"
+                  title="Report"
                   onClick={() => {
                     handleReport(post.post_id);
                   }}
@@ -238,7 +240,7 @@ export default function Post({ handleDeletePost, post_initializer }) {
                 </A>
               )}
               {user[0].user_id === post.user_id && (
-                <A href="#" onClick={() => handleDeletePost(post.post_id)}>
+                <A href="#" title="Delete"  onClick={() => handleDeletePost(post.post_id)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
