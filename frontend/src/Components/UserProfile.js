@@ -5,10 +5,12 @@ import { Loading } from "../Components/Common/Loader";
 import Post from "./Post/Post";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Context/AuthContext";
+import EditProfile from "./Editprofile";
 
 export default function UserProfile({ id }) {
   const [userProfile, setUserProfile] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const user_id = user[0].user_id;
 
@@ -60,7 +62,10 @@ export default function UserProfile({ id }) {
 
             <div className="text-left text-center w-1/2 mx-auto">
               {userProfile.user_id === user_id && (
-                <button className="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-6 border border-gray-600 hover:border-transparent rounded">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-6 border border-gray-600 hover:border-transparent rounded"
+                >
                   Edit Profile
                 </button>
               )}
@@ -78,6 +83,15 @@ export default function UserProfile({ id }) {
           )}
         </div>
       )}
+      <EditProfile
+        open={open}
+        setOpen={setOpen}
+        initForm={{
+          name: userProfile.name ?? "",
+          description: userProfile.description ?? "",
+          email: userProfile.email,
+        }}
+      />
     </div>
   );
 }
