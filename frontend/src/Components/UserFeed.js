@@ -24,7 +24,7 @@ export default function UserFeed() {
         },
       })
       .then((res) => {
-        setPosts(res.data.data);
+        setPosts(res.data.data.reverse());
         setLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
