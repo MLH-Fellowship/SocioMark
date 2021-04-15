@@ -240,7 +240,11 @@ export default function Post({ handleDeletePost, post_initializer }) {
                 </A>
               )}
               {user[0].user_id === post.user_id && (
-                <A href="#" title="Delete"  onClick={() => handleDeletePost(post.post_id)}>
+                <A
+                  href="#"
+                  title="Delete"
+                  onClick={() => handleDeletePost(post.post_id)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
