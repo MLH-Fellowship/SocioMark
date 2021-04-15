@@ -10,14 +10,13 @@ import "../../Styles/verification.css";
 
 import {
   POST_UNCOMMENT_URL,
-  POST_DELETE_URL,
   POST_LIKE_UNLIKE_URL,
   POST_REPORT_URL,
   POST_REPORT_COOLDOWN,
   POST_VERIFY_URL,
 } from "../../constants";
 
-export default function Post({ post_initializer }) {
+export default function Post({ handleDeletePost, post_initializer }) {
   const { user, token } = useContext(AuthContext);
   const [access] = token;
   const [post, setPost] = useState(post_initializer);
@@ -83,31 +82,6 @@ export default function Post({ post_initializer }) {
           return el.comment_id !== comment_id;
         });
         new_post.comments = filtered_comments;
-        setPost(new_post);
-      })
-      .catch(({ response }) => {
-        if (response) {
-          toast.error(JSON.stringify(response.data.detail));
-        }
-      });
-  };
-
-  const handleDeletePost = (post_id) => {
-    axios
-      .delete(POST_DELETE_URL, {
-        headers: {
-          accept: "application/json",
-          Authorization: "Bearer " + access,
-        },
-        data: { post_id },
-      })
-      .then((res) => {
-        toast.info(JSON.stringify(res.data.message));
-        let new_post = Object.assign({}, post);
-        var filtered_posts = new_post.post.filter(function (el) {
-          return el.post_id !== post_id;
-        });
-        new_post.post = filtered_posts;
         setPost(new_post);
       })
       .catch(({ response }) => {
