@@ -19,8 +19,8 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "NODE_ENV=development craco start",
-    "build": "NODE_ENV=production craco build",
+    "start": "cross-env NODE_ENV=development craco start",
+    "build": "cross-env NODE_ENV=production craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
@@ -45,6 +45,7 @@
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.4",
     "autoprefixer": "^9.8.6",
+    "cross-env": "^7.0.3",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
   }
