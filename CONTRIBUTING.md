@@ -13,10 +13,12 @@ If you are working on a pre-existing issue, let us know by assigning it to yours
   - Create a fork of the project.
   - Clone the repo locally with `git clone https://github.com/<YOUR_USERNAME>/SocioMark.git`
   - Checkout in a new branch with `git checkout -b <YOUR_BRANCH_NAME>`
-  - Make the required changes and push it to your copy of the project.
+  - Make the required changes
+  - Add and commit your changes with `git add <changes>` and `git commit -m "your commit message"`
+  - Then push the changes into your branch `git push origin branch_name`
   - Before making a PR, make sure your copy of the project is up-to-date with the main project.
   - If forked project is up-to-date with the main project, go ahead and make the PR.
-  - #### If there has been any commit since you forked the project
+  - #### If there has been any commit since you forked the project, there might be some conflicts while making the PR. In case of any conflicts:
     - Set an upstream with `git remote add upstream https://github.com/MLH-Fellowship/SocioMark.git`
     - Checkout to main branch and `git pull upstream main`
     - Checkout to the branch you were working on
