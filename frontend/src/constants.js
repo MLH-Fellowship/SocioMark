@@ -6,7 +6,7 @@ switch (ENV) {
     BASE_URL = "https://sociomark-backend.herokuapp.com";
     break;
   default:
-    BASE_URL = "http://localhost:8000";
+    BASE_URL = "https://sociomark-backend.herokuapp.com";
     break;
 }
 
