@@ -40,6 +40,7 @@ export default function CreatePost({ handleCreatePost }) {
         },
       })
       .then((res) => {
+        setDescription("");
         setLoading(false);
         toast.success(JSON.stringify(res.data.message));
         handleCreatePost(res.data.data);
