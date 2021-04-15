@@ -264,7 +264,10 @@ export default function Post({ post_initializer }) {
                 </A>
               )}
               {user[0].user_id === post.user_id && (
-                <button className="bg-red-900 w-auto hover:bg-red-700 text-center text-lg font-normal text-white rounded-md p-1 mt-1" onClick={()=>handleDeletePost(post.post_id)}> 
+                <button
+                  className="bg-red-900 w-auto hover:bg-red-700 text-center text-lg font-normal text-white rounded-md p-1 mt-1"
+                  onClick={() => handleDeletePost(post.post_id)}
+                >
                   Delete
                 </button>
               )}
