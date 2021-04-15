@@ -10,6 +10,7 @@ import "../../Styles/verification.css";
 
 import {
   POST_UNCOMMENT_URL,
+  POST_DELETE_URL,
   POST_LIKE_UNLIKE_URL,
   POST_REPORT_URL,
   POST_REPORT_COOLDOWN,
@@ -237,6 +238,9 @@ export default function Post({ post_initializer }) {
                   </svg>
                 </A>
               )}
+{user[0].user_id === post.user_id && (                <button className="bg-red-900 w-full hover:bg-red-700 text-center text-lg font-semibold text-white rounded-md p-1 mt-1 md:mt-0">
+                    Delete
+                </button>)}
             </div>
           </div>
           <div className="mx-auto container">
