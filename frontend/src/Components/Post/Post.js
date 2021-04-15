@@ -92,6 +92,31 @@ export default function Post({ post_initializer }) {
       });
   };
 
+  const handleDeletePost = (post_id) => {
+    axios
+      .delete(POST_DELETE_URL, {
+        headers: {
+          accept: "application/json",
+          Authorization: "Bearer " + access,
+        },
+        data: { post_id },
+      })
+      .then((res) => {
+        toast.info(JSON.stringify(res.data.message));
+        let new_post = Object.assign({}, post);
+        var filtered_posts = new_post.post.filter(function (el) {
+          return el.post_id !== post_id;
+        });
+        new_post.post = filtered_posts;
+        setPost(new_post);
+      })
+      .catch(({ response }) => {
+        if (response) {
+          toast.error(JSON.stringify(response.data.detail));
+        }
+      });
+  };
+
   const handleReport = (post_id) => {
     axios
       .post(
@@ -238,9 +263,11 @@ export default function Post({ post_initializer }) {
                   </svg>
                 </A>
               )}
-{user[0].user_id === post.user_id && (                <button className="bg-red-900 w-full hover:bg-red-700 text-center text-lg font-semibold text-white rounded-md p-1 mt-1 md:mt-0">
-                    Delete
-                </button>)}
+              {user[0].user_id === post.user_id && (
+                <button className="bg-red-900 w-auto hover:bg-red-700 text-center text-lg font-normal text-white rounded-md p-1 mt-1" onClick={()=>handleDeletePost(post.post_id)}> 
+                  Delete
+                </button>
+              )}
             </div>
           </div>
           <div className="mx-auto container">
