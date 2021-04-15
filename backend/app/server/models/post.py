@@ -20,6 +20,7 @@ class PostSchema(BaseModel):
 
 class UpdatePostModel(BaseModel):
     description: Optional[str]
+    post_id: str
 
     class Config:
         schema_extra = {

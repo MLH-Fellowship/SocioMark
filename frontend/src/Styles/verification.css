@@ -74,3 +74,12 @@
   cursor: not-allowed;
   pointer-events: none;
 }
+
+.clickable{
+  cursor:pointer;
+  padding:2px;
+}
+
+.edit-post-area{
+  margin-top:4px;
+}
