@@ -98,6 +98,7 @@ export default function Register({ onToggle }) {
           },
         })
         .then((resp) => {
+          setForm(initForm);
           toast.success(resp.data.message);
           navigate("/home");
           onToggle();
