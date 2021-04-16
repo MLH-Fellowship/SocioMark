@@ -58,7 +58,7 @@ async def add_post(email: str, post_data: dict) -> dict:
         encoded_image = await encode_image(rgb_image, info)
 
         # upload the image
-        with tempfile.NamedTemporaryFile(suffix=".png") as tmp:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
             cv2.imwrite(tmp.name, encoded_image)
             image_url = upload_image_path(tmp.name)
 
@@ -116,7 +116,7 @@ async def update_post(email: str, post_id: str, data: dict):
     post = await posts_collection.find_one({"_id": ObjectId(post_id)})
     if post and user["_id"] == post["user_id"]:
         updated_post = await posts_collection.update_one(
-            {"_id": ObjectId(id)}, {"$set": data}
+            {"_id": ObjectId(post_id)}, {"$set": data}
         )
         if updated_post:
             return True

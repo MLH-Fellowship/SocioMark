@@ -19,6 +19,7 @@ class PostSchema(BaseModel):
 
 
 class UpdatePostModel(BaseModel):
+    post_id: str
     description: Optional[str]
 
     class Config:
