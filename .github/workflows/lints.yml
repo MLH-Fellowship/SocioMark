@@ -1,0 +1,27 @@
+name: Lint Code Base
+
+on:
+  [push, pull_request]
+
+jobs:
+  lint:
+    name: Run Linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+
+      - name: Run Individual Linters
+        uses: github/super-linter@v3
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_PYTHON_FLAKE8: true
+          VALIDATE_JAVASCRIPT_ES: true
+          JAVASCRIPT_DEFAULT_STYLE: prettier
+          VALIDATE_JAVASCRIPT_PRETTIER: true
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

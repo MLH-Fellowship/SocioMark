@@ -4,7 +4,12 @@ import Post from "./Post/Post";
 import CreatePost from "./Post/CreatePost";
 import { AuthContext } from "../Context/AuthContext";
 import { Loading } from "../Components/Common/Loader";
-import { POST_GET_ALL_URL, USER_SUGGESTIONS_URL } from "../constants";
+import { toast } from "react-toastify";
+import {
+  POST_GET_ALL_URL,
+  USER_SUGGESTIONS_URL,
+  POST_DELETE_URL,
+} from "../constants";
 import Suggestions from "./Suggestions";
 
 export default function UserFeed() {
@@ -24,10 +29,10 @@ export default function UserFeed() {
         },
       })
       .then((res) => {
-        setPosts(res.data.data);
+        setPosts(res.data.data.reverse());
         setLoading(false);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -36,13 +41,37 @@ export default function UserFeed() {
       setSuggestedUsers(res.data.data);
       setSuggestionLoading(false);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
   const handleCreatePost = (new_post) => {
     const new_posts = [new_post, ...posts];
     setPosts(new_posts);
   };
+
+  const handleDeletePost = (post_id) => {
+    axios
+      .delete(POST_DELETE_URL, {
+        headers: {
+          accept: "application/json",
+          Authorization: "Bearer " + access,
+        },
+        data: { post_id },
+      })
+      .then((res) => {
+        toast.info(JSON.stringify(res.data.message));
+        const filtered_posts = posts.filter(function (el) {
+          return el.post_id !== post_id;
+        });
+        setPosts(filtered_posts);
+      })
+      .catch(({ response }) => {
+        if (response) {
+          toast.error(JSON.stringify(response.data.detail));
+        }
+      });
+  };
+
   return (
     <div>
       {loading || suggestionLoading ? (
@@ -52,7 +81,13 @@ export default function UserFeed() {
           <div className="max-w-2xl sm:w-2/3 w-full mt-1">
             <CreatePost handleCreatePost={handleCreatePost} />
             {posts.map((post) => {
-              return <Post key={post.post_id} post_initializer={post} />;
+              return (
+                <Post
+                  key={post.post_id}
+                  post_initializer={post}
+                  handleDeletePost={handleDeletePost}
+                />
+              );
             })}
           </div>
           <div className="sm:w-1/3 sm:max-w-sm mt-4 sm:mt-1 w-full pb-4 h-full sticky top-4  rounded-lg bg-white overflow-hidden shadow">

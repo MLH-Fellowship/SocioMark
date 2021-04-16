@@ -40,7 +40,7 @@ async def delete_post_data(post_id: str = Body(..., embed=True), current_user=De
 async def update_post_data(updated_post: UpdatePostModel = Body(...), current_user=Depends(auth_handler.auth_wrapper)):
     updated_post = jsonable_encoder(updated_post)
     new_post = await update_post(current_user, updated_post["post_id"], updated_post)
-    return ResponseModel(new_post,"Post updated successfully.")
+    return ResponseModel(new_post, "Post updated successfully.")
 
 
 @router.post("/report", response_description="Report post")

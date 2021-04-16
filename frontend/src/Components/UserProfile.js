@@ -24,7 +24,7 @@ export default function UserProfile({ id }) {
         setLoading(false);
         toast.error("No user found with the ID"); //catch error in backend and update here
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
   return (

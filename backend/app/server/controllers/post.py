@@ -58,7 +58,7 @@ async def add_post(email: str, post_data: dict) -> dict:
         encoded_image = await encode_image(rgb_image, info)
 
         # upload the image
-        with tempfile.NamedTemporaryFile(delete=False,suffix=".png") as tmp:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
             cv2.imwrite(tmp.name, encoded_image)
             image_url = upload_image_path(tmp.name)
 
