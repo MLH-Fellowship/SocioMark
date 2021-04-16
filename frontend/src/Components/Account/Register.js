@@ -27,6 +27,7 @@ export default function Register({ onToggle }) {
   const [fileInterface, setFile] = useState({ fileUpload: null });
   const [error, setError] = useState(initError);
   const [loading, setLoading] = useState(false);
+  const hiddenFileInput = React.useRef(null);
 
   function validInputs() {
     let formValid = true;
@@ -112,6 +113,10 @@ export default function Register({ onToggle }) {
     }
   };
 
+  const handleClick = (_event) => {
+    hiddenFileInput.current.click();
+  };
+
   return (
     <div>
       {loading ? (
@@ -119,10 +124,7 @@ export default function Register({ onToggle }) {
       ) : (
         <div className="flex items-center justify-center py-5 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full">
-            <form
-              onSubmit={handleSubmit}
-              className="bg-white shadow rounded px-8 pt-6 pb-8 my-5 "
-            >
+            <div className="bg-white shadow rounded px-8 pt-6 pb-8 my-5 ">
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -130,7 +132,47 @@ export default function Register({ onToggle }) {
                 >
                   Profile Picture
                 </label>
+                <button
+                  className="w-full bg-blue-800 p-3 rounded-3xl focus:outline-none flex justify-between pl-6 pr-6 "
+                  onClick={handleClick}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="white"
+                    class="bi bi-person-circle"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                    <path
+                      fill-rule="evenodd"
+                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+                    />
+                  </svg>
+                  {fileInterface.fileUpload && (
+                    <p className="text-white text-xs">
+                      {fileInterface.fileUpload.name}
+                    </p>
+                  )}
+
+                  {fileInterface.fileUpload && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="white"
+                      class="bi bi-check-circle"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                      <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                    </svg>
+                  )}
+                </button>
                 <input
+                  ref={hiddenFileInput}
+                  style={{ display: "none" }}
                   aria-label="profile_picture"
                   name="profile_picture"
                   onChange={handleFileUpload}
@@ -239,6 +281,7 @@ export default function Register({ onToggle }) {
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-4">
                 <button
+                  onClick={handleSubmit}
                   type="submit"
                   className="w-full sm:w-1/3 flex items-center bg-indigo-500 hover:bg-indigo-800 text-white font-bold py-2 px-4 sm:px-3 rounded focus:outline-none focus:shadow-outline"
                 >
@@ -291,7 +334,7 @@ export default function Register({ onToggle }) {
                   </button>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       )}

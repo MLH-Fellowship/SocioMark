@@ -78,10 +78,6 @@ export default function CreatePost({ handleCreatePost }) {
       ) : (
         <div>
           <div className="relative bg-white shadow rounded-lg">
-            {/* <form
-              onSubmit={handleSubmit}
-              className="flex w-full flex-col p-4 md:p-6"
-            > */}
             <div className="flex w-full flex-col p-4 md:p-6">
               <textarea
                 aria-label="description"
@@ -141,7 +137,6 @@ export default function CreatePost({ handleCreatePost }) {
                 </div>
               </div>
             </div>
-            {/* </form> */}
           </div>
         </div>
       )}
