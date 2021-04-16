@@ -168,13 +168,13 @@ export default function Post({ handleDeletePost, post_initializer }) {
         if (details.is_authentic === true) {
           toast.success(JSON.stringify(res.data.message));
         } else {
-          toast.warn(JSON.stringify(res.data.message));
-          setModalText(
-            "Original Author: " +
-              details.author_name +
-              " (" +
-              details.author_email +
-              ")"
+          toast.warn(JSON.stringify(res.data.message));          
+          setModalText(<A href={`/user/${details.author_id}`}>
+            "Original Author:  
+              {details.author_name}  
+               ( 
+              {details.author_email}  
+              )" </A>
           );
           setShowModal(true);
         }
