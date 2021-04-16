@@ -16,6 +16,16 @@ A social-media platform that lets you upload images and secure them with a perso
 
 <img src="https://user-images.githubusercontent.com/64848982/114246722-f1812a80-99b0-11eb-8d79-705978fc712f.png">
 
+## 📱 Progressive WebApp
+SocioMark is now a Progressive WebApp for better accessibility and user experience. It allows users to install the app directly from the web to their desktops/home screens and provides the native app-like experience. SocioMark is fully responsive, compatible and provides users with the same experience across tablets, mobile devices, and desktops
+
+<p align="center">
+  <img alt="Light" src="https://user-images.githubusercontent.com/34866653/114988100-8dc89700-9eb3-11eb-892a-217aa0b5622c.jpg" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Dark" src="https://user-images.githubusercontent.com/34866653/114988153-a0db6700-9eb3-11eb-81d8-1a84eae83aa3.png" width="50%">
+</p>
+
+
 ## ⚛ Tech Stack
 - Frontend : ReactJS (JavaScript), Tailwind CSS
 - Backend : FastAPI (Python3)
