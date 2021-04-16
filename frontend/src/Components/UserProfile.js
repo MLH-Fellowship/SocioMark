@@ -44,21 +44,21 @@ export default function UserProfile({ id }) {
                 />
               </div>
             </div>
-  
+
             <div className="flex flex-col w-full md:w-4/5 mx-auto py-2 text-center items-center">
               <div className="text-left pl-4 pt-3 text-center w-2/3">
                 <span className="text-base text-gray-700 text-3xl">
                   {userProfile.name}
                 </span>
               </div>
-  
+
               <div className="text-left pl-4 pt-3 text-center w-4/5">
                 <p className="text-base font-medium text-black-700 mr-2 box-content text-xl font-mono ">
                   {userProfile.description}
                 </p>
               </div>
             </div>
-  
+
             <div className="text-left text-center w-1/2 mx-auto">
               {userProfile.user_id === user_id && (
                 <button className="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-6 border border-gray-600 hover:border-transparent rounded">
@@ -67,7 +67,7 @@ export default function UserProfile({ id }) {
               )}
             </div>
           </div>
-  
+
           {userProfile.posts?.length > 0 ? (
             <div className="flex flex-col sm:2/3 w-full pt-10 items-start">
               <div className="flex-1 text-center px-4 py-2 m-2 max-w-3xl">
@@ -252,12 +252,12 @@ export default function UserProfile({ id }) {
                   />
                 </svg>
                 {userProfile.user_id === user_id ? (
-                  <h1 className="text-2xl">
-                    No posts to show.
-                    <A href={`/home`} className="hover:text-blue-500">
-                      Start creating your posts here.
+                  <div className="flex flex-col items-center">
+                    <h1 className="text-2xl">No posts to show</h1>
+                    <A href={`/home`} className="hover:text-blue-900">
+                      Start creating your posts here
                     </A>
-                  </h1>
+                  </div>
                 ) : (
                   <h1 className="text-2xl">No posts to show.</h1>
                 )}
@@ -267,5 +267,5 @@ export default function UserProfile({ id }) {
         </div>
       )}
     </div>
-  );  
+  );
 }
