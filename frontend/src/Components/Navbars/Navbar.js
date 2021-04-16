@@ -109,7 +109,7 @@ export default function Navbar({ links, logout }) {
     axios.get(USER_SUGGESTIONS_URL).then((res) => {
       setUsers(res.data.data);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function Navbar({ links, logout }) {
     } else {
       setSearchResults([]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [searchKey]);
 
   return (
