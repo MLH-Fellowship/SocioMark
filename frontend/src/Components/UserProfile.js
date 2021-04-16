@@ -44,21 +44,21 @@ export default function UserProfile({ id }) {
                 />
               </div>
             </div>
-  
+
             <div className="flex flex-col w-full md:w-4/5 mx-auto py-2 text-center items-center">
               <div className="text-left pl-4 pt-3 text-center w-2/3">
                 <span className="text-base text-gray-700 text-3xl">
                   {userProfile.name}
                 </span>
               </div>
-  
+
               <div className="text-left pl-4 pt-3 text-center w-4/5">
                 <p className="text-base font-medium text-black-700 mr-2 box-content text-xl font-mono ">
                   {userProfile.description}
                 </p>
               </div>
             </div>
-  
+
             <div className="text-left text-center w-1/2 mx-auto">
               {userProfile.user_id === user_id && (
                 <button className="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-6 border border-gray-600 hover:border-transparent rounded">
@@ -267,5 +267,5 @@ export default function UserProfile({ id }) {
         </div>
       )}
     </div>
-  );  
+  );
 }
