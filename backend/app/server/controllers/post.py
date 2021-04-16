@@ -81,7 +81,7 @@ async def retrieve_posts(user_id: ObjectId):
     user = await users_collection.find_one({"_id": ObjectId(user_id)})
     posts_by_user = posts_collection.find({"user_id": ObjectId(user_id)})
     async for post in posts_by_user:
-        if (post["report_counter"] <= config["THRESHOLD"]):
+        if (post["report_counter"] <= int(config["THRESHOLD"])):
             likes_on_post = await get_all_likes_on_post(post["_id"])
             comments_on_post = await get_all_comments_on_post(post["_id"])
             posts.append(post_helper(post, user, likes_on_post, comments_on_post))
@@ -92,7 +92,7 @@ async def retrieve_posts(user_id: ObjectId):
 async def retrieve_all_posts():
     posts = []
     async for post in posts_collection.find():
-        if (post["report_counter"] <= config["THRESHOLD"]):
+        if (post["report_counter"] <= int(config["THRESHOLD"])):
             user = await users_collection.find_one({"_id": post["user_id"]})
             likes_on_post = await get_all_likes_on_post(post["_id"])
             comments_on_post = await get_all_comments_on_post(post["_id"])
@@ -103,7 +103,7 @@ async def retrieve_all_posts():
 # Retrieve a post with a matching ID
 async def retrieve_post(post_id: str) -> dict:
     post = await posts_collection.find_one({"_id": ObjectId(post_id)})
-    if post and (post["report_counter"] <= config["THRESHOLD"]):
+    if post and (post["report_counter"] <= int(config["THRESHOLD"])):
         user = await users_collection.find_one({"_id": post["user_id"]})
         likes_on_post = await get_all_likes_on_post(post["_id"])
         comments_on_post = await get_all_comments_on_post(post["_id"])
