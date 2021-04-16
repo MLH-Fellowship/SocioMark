@@ -10,6 +10,7 @@ from .comment import get_all_comments_on_post
 from .steganography.hash import hash_sha_info
 from .upload import upload_image_path, upload_image
 from .verify import encode_image, decode_image
+from ..config import config
 
 # helpers
 
@@ -80,7 +81,7 @@ async def retrieve_posts(user_id: ObjectId):
     user = await users_collection.find_one({"_id": ObjectId(user_id)})
     posts_by_user = posts_collection.find({"user_id": ObjectId(user_id)})
     async for post in posts_by_user:
-        if (post["report_counter"] <=  6):
+        if (post["report_counter"] <=  config["THRESHOLD"]):
             likes_on_post = await get_all_likes_on_post(post["_id"])
             comments_on_post = await get_all_comments_on_post(post["_id"])
             posts.append(post_helper(post, user, likes_on_post, comments_on_post))
@@ -91,7 +92,7 @@ async def retrieve_posts(user_id: ObjectId):
 async def retrieve_all_posts():
     posts = []
     async for post in posts_collection.find():
-        if (post["report_counter"] <=  6):
+        if (post["report_counter"] <=  config["THRESHOLD"]):
             user = await users_collection.find_one({"_id": post["user_id"]})
             likes_on_post = await get_all_likes_on_post(post["_id"])
             comments_on_post = await get_all_comments_on_post(post["_id"])
