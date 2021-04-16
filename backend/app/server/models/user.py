@@ -36,16 +36,12 @@ class LoginSchema(BaseModel):
 
 class UpdateUserModel(BaseModel):
     name: Optional[str]
-    password: Optional[str]
-    profile_picture: Optional[str]
     description: Optional[str]
 
     class Config:
         schema_extra = {
             "example": {
                 "name": "John Doe",
-                "password": "password",
-                "profile_picture": "url_of_image",
                 "description": "This is John Doe"
             }
         }

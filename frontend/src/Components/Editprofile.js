@@ -4,8 +4,14 @@ import React, { useState } from "react";
 import { navigate } from "hookrouter";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { REGISTER_URL } from "../constants";
-export default function EditProfile({ open, setOpen, initForm }) {
+import { UPDATE_USER_URL } from "../constants";
+export default function EditProfile({
+  open,
+  setOpen,
+  user,
+  access,
+  updateUserProfile,
+}) {
   const initError = {
     name: "",
     email: "",
@@ -14,7 +20,12 @@ export default function EditProfile({ open, setOpen, initForm }) {
     description: "",
   };
 
-  const [form, setForm] = useState(initForm);
+  const [form, setForm] = useState({
+    name: user.name,
+    description: user.description,
+    email: user.email,
+  });
+
   const [fileInterface, setFile] = useState({ fileUpload: null });
   const [error, setError] = useState(initError);
   const [loading, setLoading] = useState(false);
@@ -37,24 +48,21 @@ export default function EditProfile({ open, setOpen, initForm }) {
     e.preventDefault();
 
     setLoading(true);
-    var bodyFormData = new FormData();
-    bodyFormData.append("name", form.name);
-    bodyFormData.append("email", form.email);
-    bodyFormData.append("description", form.description);
-    if (fileInterface.fileUpload) {
-      bodyFormData.append("image", fileInterface.fileUpload);
-    }
+    var data = {
+      name: form.name ?? user.name,
+      description: form.description ?? user.description,
+    };
     axios
-      .post(REGISTER_URL, bodyFormData, {
+      .patch(UPDATE_USER_URL, data, {
         headers: {
           accept: "application/json",
-          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + access,
         },
       })
       .then((resp) => {
         toast.success(resp.data.message);
-        navigate("/home");
-
+        setOpen(false);
+        updateUserProfile(data.name, data.description);
         setLoading(false);
       })
       .catch(({ response }) => {
@@ -142,22 +150,6 @@ export default function EditProfile({ open, setOpen, initForm }) {
                             <div className="mb-4">
                               <label
                                 className="block text-gray-700 text-sm font-bold mb-2"
-                                htmlFor="image"
-                              >
-                                Profile Picture
-                              </label>
-                              <input
-                                aria-label="profile_picture"
-                                name="profile_picture"
-                                onChange={handleFileUpload}
-                                type="file"
-                                accept="image/*"
-                                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
-                              />
-                            </div>
-                            <div className="mb-4">
-                              <label
-                                className="block text-gray-700 text-sm font-bold mb-2"
                                 htmlFor="email"
                               >
                                 Name
@@ -165,7 +157,7 @@ export default function EditProfile({ open, setOpen, initForm }) {
                               <input
                                 aria-label="name"
                                 name="name"
-                                value={form.name}
+                                value={form.name ?? user.name}
                                 type="name"
                                 onChange={handleChange}
                                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
@@ -186,7 +178,8 @@ export default function EditProfile({ open, setOpen, initForm }) {
                                 readOnly="true"
                                 aria-label="user name"
                                 name="email"
-                                value={form.email}
+                                value={user.email}
+                                disabled
                                 type="email"
                                 onChange={handleChange}
                                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"
@@ -206,7 +199,7 @@ export default function EditProfile({ open, setOpen, initForm }) {
                               <textarea
                                 aria-label="description"
                                 name="description"
-                                value={form.description}
+                                value={form.description ?? user.description}
                                 type="description"
                                 onChange={handleChange}
                                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-indigo-100 leading-tight focus:outline-none focus:shadow-outline"

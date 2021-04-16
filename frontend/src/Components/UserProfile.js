@@ -11,6 +11,9 @@ import { A } from "hookrouter";
 export default function UserProfile({ id }) {
   const [userProfile, setUserProfile] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access_token")
+  );
   const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const user_id = user[0].user_id;
@@ -29,6 +32,13 @@ export default function UserProfile({ id }) {
       });
     // eslint-disable-next-line
   }, []);
+
+  const updateUserProfile = (name, description) => {
+    var user = Object.assign({}, userProfile);
+    user.name = name;
+    user.description = description;
+    setUserProfile(user);
+  };
 
   return (
     <div>
@@ -272,13 +282,11 @@ export default function UserProfile({ id }) {
         </div>
       )}
       <EditProfile
+        user={userProfile}
         open={open}
         setOpen={setOpen}
-        initForm={{
-          name: userProfile.name ?? "",
-          description: userProfile.description ?? "",
-          email: userProfile.email,
-        }}
+        access={accessToken}
+        updateUserProfile={updateUserProfile}
       />
     </div>
   );
