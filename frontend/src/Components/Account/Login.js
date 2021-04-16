@@ -25,7 +25,7 @@ export default function Login({ onToggle }) {
     axios
       .post(LOGIN_URL, { ...form })
       .then((resp) => {
-        setForm(initForm);        
+        setForm(initForm);
         toast.success(JSON.stringify(resp.data.message));
         localStorage.setItem("access_token", resp.data.data.access_token);
         navigate("/home");
