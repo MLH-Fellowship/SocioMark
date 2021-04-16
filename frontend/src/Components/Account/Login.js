@@ -85,7 +85,7 @@ export default function Login({ onToggle }) {
                 />
               </div>
 
-              <div className=" flex flex-col sm:flex-row items-center justify-between mt-4">
+              <div className=" flex flex-col sm:flex-row items-start sm:items-center justify-between mt-4">
                 <button
                   type="submit"
                   className="flex w-full sm:w-1/3 items-center bg-indigo-500 hover:bg-indigo-800 text-white font-bold py-2 px-4 sm:px-3 rounded focus:outline-none focus:shadow-outline"
