@@ -1,25 +1,31 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "SocioMark",
+  "short_name": "SocioMark",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "https://user-images.githubusercontent.com/34866653/114776270-e999ff80-9d8f-11eb-818c-d0b630694f93.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "https://user-images.githubusercontent.com/34866653/114776064-acce0880-9d8f-11eb-9be5-a77550499fc6.png",
+      "sizes": "256x256",
+      "type": "image/png"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "https://user-images.githubusercontent.com/34866653/114776161-c8d1aa00-9d8f-11eb-9f60-feccb054f200.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "https://user-images.githubusercontent.com/34866653/114776167-ca02d700-9d8f-11eb-997e-c380797663f2.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }
