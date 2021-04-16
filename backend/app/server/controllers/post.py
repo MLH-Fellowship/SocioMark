@@ -80,9 +80,10 @@ async def retrieve_posts(user_id: ObjectId):
     user = await users_collection.find_one({"_id": ObjectId(user_id)})
     posts_by_user = posts_collection.find({"user_id": ObjectId(user_id)})
     async for post in posts_by_user:
-        likes_on_post = await get_all_likes_on_post(post["_id"])
-        comments_on_post = await get_all_comments_on_post(post["_id"])
-        posts.append(post_helper(post, user, likes_on_post, comments_on_post))
+        if (post["report_counter"] <=  6):
+            likes_on_post = await get_all_likes_on_post(post["_id"])
+            comments_on_post = await get_all_comments_on_post(post["_id"])
+            posts.append(post_helper(post, user, likes_on_post, comments_on_post))
     return posts
 
 
