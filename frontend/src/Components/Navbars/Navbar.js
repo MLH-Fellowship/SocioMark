@@ -171,6 +171,7 @@ export default function Navbar({ links, logout }) {
                   key={result.user_id}
                   className="w-full"
                   onClick={() => {
+                    setSearchKey("");
                     navigate(`/user/${result.user_id}`);
                     window.location.reload();
                   }}
