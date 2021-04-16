@@ -23,7 +23,7 @@ If you are working on a pre-existing issue, let us know by assigning it to yours
     - Checkout to main branch and `git pull upstream main`
     - Checkout to the branch you were working on
     - Rebase it with the main branch with `git rebase main`
-    - If there is any conflicts while rebasing, resolve them, and continue the rebase
+    - If there are any conflicts while rebasing, resolve them locally, and continue the rebase
     - Test it locally
     - If everything is working as expected, push it to the origin
     - Make a PR to the main project
