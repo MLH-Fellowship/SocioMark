@@ -14,6 +14,7 @@ export const LOGIN_URL = `${BASE_URL}/user/login`;
 export const REGISTER_URL = `${BASE_URL}/user/register`;
 export const CURRENT_USER_URL = `${BASE_URL}/user/current_user`;
 export const POST_CREATE_URL = `${BASE_URL}/post/create`;
+export const POST_EDIT_URL = `${BASE_URL}/post/update`;
 export const POST_DELETE_URL = `${BASE_URL}/post/delete`;
 export const POST_GET_ALL_URL = `${BASE_URL}/post/all`;
 export const POST_COMMENT_URL = `${BASE_URL}/post/comment`;

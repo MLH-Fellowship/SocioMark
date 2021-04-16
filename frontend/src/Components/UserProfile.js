@@ -67,7 +67,7 @@ export default function UserProfile({ id }) {
               )}
             </div>
           </div>
-  
+
           {userProfile.posts?.length > 0 ? (
             <div className="flex flex-col sm:2/3 w-full pt-10 items-start">
               <div className="flex-1 text-center px-4 py-2 m-2 max-w-3xl">
@@ -252,12 +252,12 @@ export default function UserProfile({ id }) {
                   />
                 </svg>
                 {userProfile.user_id === user_id ? (
-                  <h1 className="text-2xl">
-                    No posts to show.
-                    <A href={`/home`} className="hover:text-blue-500">
-                      Start creating your posts here.
+                  <div className="flex flex-col items-center">
+                    <h1 className="text-2xl">No posts to show</h1>
+                    <A href={`/home`} className="hover:text-blue-900">
+                      Start creating your posts here
                     </A>
-                  </h1>
+                  </div>
                 ) : (
                   <h1 className="text-2xl">No posts to show.</h1>
                 )}
