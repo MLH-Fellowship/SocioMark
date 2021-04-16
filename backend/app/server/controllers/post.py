@@ -102,7 +102,7 @@ async def retrieve_all_posts():
 # Retrieve a post with a matching ID
 async def retrieve_post(post_id: str) -> dict:
     post = await posts_collection.find_one({"_id": ObjectId(post_id)})
-    if post:
+    if post and (post["report_counter"] <=  config["THRESHOLD"]):
         user = await users_collection.find_one({"_id": post["user_id"]})
         likes_on_post = await get_all_likes_on_post(post["_id"])
         comments_on_post = await get_all_comments_on_post(post["_id"])
