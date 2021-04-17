@@ -45,13 +45,7 @@ Being a fully responsive and compatible application, it provides users with the 
 - Navigate to ```http://localhost:3000/```
 
 ## 🚩 How to Contribute
-- Fork and clone the repository ```git clone https://github.com/MLH-Fellowship/SocioMark.git```
-- Create a branch ```git checkout -b "branch_name"```
-- Make changes in that branch
-- Add and commit your changes with ```git add <changes>``` and ```git commit -m "your commit message"```
-- Then push the changes into your branch ```git push origin branch_name```
-- Now you can create a PR using that branch in our repository.
-- 🎉 You have successfully contributed to this project.
+- You can check out the [CONTRIBUTING.md](https://github.com/MLH-Fellowship/SocioMark/blob/main/CONTRIBUTING.md) file in the repo 😄.
 
 ## 🤓 Future Improvements
 - Follower functionality that improves interaction between users and lets users customize their feed pages
