@@ -170,7 +170,10 @@ export default function Post({ handleDeletePost, post_initializer }) {
         } else {
           toast.warn(JSON.stringify(res.data.message));
           setModalText(
-            <A href={`/user/${details.author_id}`}>
+            <A
+              href={`/user/${details.author_id}`}
+              className="hover:text-blue-700"
+            >
               "Original Author:
               {details.author_name}({details.author_email}
               )"{" "}
@@ -306,7 +309,7 @@ export default function Post({ handleDeletePost, post_initializer }) {
                   }}
                   show={showModal}
                 >
-                   {modalText}
+                  {modalText}
                 </Modal>
               ) : (
                 <button
