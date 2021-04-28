@@ -172,10 +172,9 @@ export default function Post({ handleDeletePost, post_initializer }) {
           setModalText(
             <A
               href={`/user/${details.author_id}`}
-              className="hover:text-blue-700"
+              //className="hover:text-blue-700"
             >
-              "Original Author:
-              {details.author_name}({details.author_email}
+              "Original Author: <u>{details.author_name}</u> ({details.author_email}
               )"{" "}
             </A>
           );
