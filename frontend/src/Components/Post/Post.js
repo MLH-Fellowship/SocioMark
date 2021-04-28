@@ -171,10 +171,11 @@ export default function Post({ handleDeletePost, post_initializer }) {
           toast.warn(JSON.stringify(res.data.message));
           setModalText(
             <A href={`/user/${details.author_id}`}>
-              Original Author:{" "}
+              Original Author: &ensp;
               <span className="hover:text-blue-700">
-                {details.author_name} ({details.author_email}){" "}
+                {details.author_name} ({details.author_email})
               </span>
+            </A>
           );
           setShowModal(true);
         }
