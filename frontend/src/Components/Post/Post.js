@@ -306,7 +306,7 @@ export default function Post({ handleDeletePost, post_initializer }) {
                   }}
                   show={showModal}
                 >
-                  <A href={`/user/${post.user_id}`}> {modalText}</A>
+                   {modalText}
                 </Modal>
               ) : (
                 <button
