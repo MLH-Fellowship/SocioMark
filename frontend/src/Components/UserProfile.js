@@ -5,11 +5,16 @@ import { Loading } from "../Components/Common/Loader";
 import Post from "./Post/Post";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Context/AuthContext";
+import EditProfile from "./Editprofile";
 import { A } from "hookrouter";
 
 export default function UserProfile({ id }) {
   const [userProfile, setUserProfile] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access_token")
+  );
+  const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const user_id = user[0].user_id;
 
@@ -27,6 +32,13 @@ export default function UserProfile({ id }) {
       });
     // eslint-disable-next-line
   }, []);
+
+  const updateUserProfile = (name, description) => {
+    var user = Object.assign({}, userProfile);
+    user.name = name;
+    user.description = description;
+    setUserProfile(user);
+  };
 
   return (
     <div>
@@ -61,7 +73,10 @@ export default function UserProfile({ id }) {
 
             <div className="text-left text-center w-1/2 mx-auto">
               {userProfile.user_id === user_id && (
-                <button className="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-6 border border-gray-600 hover:border-transparent rounded">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-6 border border-gray-600 hover:border-transparent rounded"
+                >
                   Edit Profile
                 </button>
               )}
@@ -266,6 +281,13 @@ export default function UserProfile({ id }) {
           )}
         </div>
       )}
+      <EditProfile
+        user={userProfile}
+        open={open}
+        setOpen={setOpen}
+        access={accessToken}
+        updateUserProfile={updateUserProfile}
+      />
     </div>
   );
 }
